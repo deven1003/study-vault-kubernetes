@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KubeLearn by Deven Kalathiya</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060810;--bg2:#0b0f1e;--bg3:#101524;--bg4:#161d30;--card:#0e1422;--b:rgba(255,255,255,0.07);--b2:rgba(255,255,255,0.12);--cy:#00e5ff;--vt:#8b5cf6;--gn:#00ffa3;--am:#ffb800;--rd:#ff4d6a;--tx:#e8edf5;--mu:#5a6380;--m2:#8892a4}
+body.light{--bg:#f0f4f8;--bg2:#e8eef5;--bg3:#dde5ef;--bg4:#cfd9e8;--card:#ffffff;--b:rgba(0,0,0,0.08);--b2:rgba(0,0,0,0.14);--cy:#0077aa;--vt:#6d28d9;--gn:#059669;--am:#b45309;--rd:#dc2626;--tx:#1a2332;--mu:#94a3b8;--m2:#64748b}
+body.light::before{background-image:linear-gradient(rgba(0,100,180,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,100,180,.04) 1px,transparent 1px)}
+body.light::after{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(0,120,200,.06) 0%,transparent 70%)}
+body.light .an.c{border-color:rgba(0,119,170,.4);background:rgba(0,119,170,.08);color:var(--cy)}
+body.light .an.v{border-color:rgba(109,40,217,.4);background:rgba(109,40,217,.08);color:var(--vt)}
+body.light .an.g{border-color:rgba(5,150,105,.4);background:rgba(5,150,105,.08);color:var(--gn)}
+body.light .an.a{border-color:rgba(180,83,9,.4);background:rgba(180,83,9,.08);color:var(--am)}
+body.light .an.gr{border-color:rgba(0,0,0,.14);background:rgba(0,0,0,.04);color:var(--m2)}
+body.light .pchip{border-color:rgba(5,150,105,.35);background:rgba(5,150,105,.08);color:var(--gn)}
+body.light .wbox{border-color:rgba(109,40,217,.25)}
+body.light .arch-cluster-box{border-color:rgba(0,119,170,.22)}
+body.light .arch-plane.cp{border-color:rgba(0,119,170,.25);background:rgba(0,119,170,.04)}
+body.light .arch-plane.wk{border-color:rgba(109,40,217,.22);background:rgba(109,40,217,.04)}
+body.light .arch-plane.nw{border-color:rgba(109,40,217,.18);background:rgba(109,40,217,.03)}
+body.light .arch-plane.wl{border-color:rgba(5,150,105,.2);background:rgba(5,150,105,.03)}
+body.light .arch-plane.cs{border-color:rgba(180,83,9,.2);background:rgba(180,83,9,.03)}
+body.light nav{background:rgba(240,244,248,.92)}
+body.light .stats{background:var(--card)}
+body.light .cb pre{color:#1a56a0}
+body.light .codebox pre{color:#1a56a0}
+body.light .cs-cmd{color:#1a56a0}
+.theme-btn{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--b2);color:var(--m2);padding:5px 12px;border-radius:7px;cursor:pointer;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;transition:all .2s;flex-shrink:0}
+.theme-btn:hover{border-color:var(--cy);color:var(--cy)}
+@keyframes spin{to{transform:rotate(360deg)}}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.025) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:0;left:0;right:0;height:500px;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(0,229,255,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:200;background:rgba(6,8,16,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--b);padding:0 1.5rem}
+.ni{max-width:1280px;margin:0 auto;display:flex;align-items:center;height:54px;gap:1.2rem}
+.logo{font-family:'Fira Code',monospace;font-size:1rem;font-weight:700;color:var(--cy);text-decoration:none;display:flex;align-items:center;gap:7px}
+.lb{width:25px;height:25px;border-radius:6px;background:linear-gradient(135deg,var(--cy),var(--vt));display:flex;align-items:center;justify-content:center;font-size:12px}
+.logo span{color:var(--m2);font-weight:400}
+.nl-wrap{display:flex;gap:2px;margin-left:auto}
+.nl{font-size:12px;font-weight:600;color:var(--m2);background:none;border:none;padding:5px 12px;border-radius:7px;cursor:pointer;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
+.nl:hover{color:var(--tx);background:var(--bg3)}
+.nl.active{color:var(--cy);background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.18)}
+.np{font-size:12px;font-weight:500;color:var(--m2);border:1px solid var(--b);padding:5px 13px;border-radius:7px;text-decoration:none;font-family:'Fira Code',monospace;transition:all .18s;white-space:nowrap}
+.np:hover{color:var(--cy);border-color:rgba(0,229,255,.3);}
+.wm{position:fixed;bottom:10px;right:14px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(0,229,255,.1);pointer-events:none;z-index:999;letter-spacing:.1em}
+.hero{position:relative;z-index:1;padding:4rem 2rem 2rem;text-align:center;max-width:820px;margin:0 auto}
+.eyb{display:inline-flex;align-items:center;gap:8px;font-family:'Fira Code',monospace;font-size:11px;color:var(--cy);border:1px solid rgba(0,229,255,.25);background:rgba(0,229,255,.05);padding:5px 14px;border-radius:20px;margin-bottom:1.2rem;animation:fu .5s ease both}
+.eyb::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cy);animation:bk 1.5s infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.2}}
+h1{font-weight:800;font-size:clamp(2rem,5vw,4rem);line-height:1.08;letter-spacing:-.04em;margin-bottom:.8rem;animation:fu .5s .1s ease both;opacity:0}
+.gr{background:linear-gradient(90deg,var(--cy),var(--vt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{font-size:.95rem;color:var(--m2);line-height:1.75;max-width:530px;margin:0 auto 1.8rem;animation:fu .5s .2s ease both;opacity:0}
+.hc{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;animation:fu .5s .3s ease both;opacity:0}
+.btn{font-weight:700;font-size:13px;padding:10px 22px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:'Plus Jakarta Sans',sans-serif}
+.bc{background:var(--cy);color:#000}.bc:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.bo{background:transparent;color:var(--tx);border:1px solid var(--b2)}.bo:hover{border-color:var(--cy);color:var(--cy);transform:translateY(-1px)}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.stats{max-width:620px;margin:0 auto 2.5rem;display:flex;background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden;animation:fu .5s .4s ease both;opacity:0;position:relative;z-index:1}
+.st{flex:1;padding:.8rem;text-align:center;border-right:1px solid var(--b)}.st:last-child{border-right:none}
+.sn{font-family:'Fira Code',monospace;font-weight:700;font-size:1.5rem;color:var(--cy);line-height:1}
+.sl{font-size:10px;color:var(--mu);margin-top:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:2rem 1.5rem;position:relative;z-index:1}
+.sec{display:none}.sec.active{display:block}
+.sh{display:flex;align-items:baseline;gap:10px;margin-bottom:1.6rem}
+.stag{font-family:'Fira Code',monospace;font-size:10px;color:var(--cy);background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.2);padding:3px 10px;border-radius:20px}
+.stit{font-weight:800;font-size:1.5rem;letter-spacing:-.03em}
+.astage{background:var(--bg2);border:1px solid var(--b);border-radius:16px;padding:2rem 1.5rem;margin-bottom:1.3rem;overflow-x:auto}
+.arch-wrap{min-width:700px;position:relative;font-family:'Fira Code',monospace}
+
+/* Outer user row */
+.arch-user-row{display:flex;justify-content:center;margin-bottom:0}
+.arch-user{border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:9px 22px;background:rgba(255,255,255,.04);cursor:pointer;transition:all .2s;text-align:center}
+.arch-user:hover{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.07)}
+.arch-user .nd-n{font-size:11px;font-weight:700;color:var(--m2)}
+.arch-user .nd-s{font-size:9px;color:var(--mu);margin-top:1px}
+
+/* Arrow connectors */
+.arch-arrow{display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:2}
+.arch-arrow .arr-line{width:1px;background:linear-gradient(180deg,rgba(0,229,255,.4),rgba(0,229,255,.15));flex:1;min-height:18px}
+.arch-arrow .arr-head{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid rgba(0,229,255,.5)}
+.arch-arrow.up .arr-head{border-top:none;border-bottom:7px solid rgba(0,229,255,.5)}
+.arch-arrow-row{display:flex;align-items:center;justify-content:center;gap:6px;padding:2px 0;color:var(--mu);font-size:10px;letter-spacing:.05em}
+.arch-arrow-row .arr-svg{display:flex;align-items:center;gap:3px}
+
+/* Cluster boundary */
+.arch-cluster-box{border:1.5px solid rgba(0,229,255,.22);border-radius:18px;padding:1.4rem;background:linear-gradient(145deg,rgba(0,229,255,.012),rgba(139,92,246,.008));position:relative}
+.arch-cluster-label{position:absolute;top:-11px;left:20px;font-size:10px;font-weight:700;color:var(--cy);background:var(--bg2);padding:1px 10px;border-radius:20px;letter-spacing:.1em;border:1px solid rgba(0,229,255,.2)}
+
+/* Section planes */
+.arch-plane{border-radius:13px;padding:.9rem 1rem;margin-bottom:10px;position:relative}
+.arch-plane-lbl{font-size:9px;letter-spacing:.1em;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;text-transform:uppercase}
+.arch-plane-lbl .lbl-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.arch-plane-lbl .lbl-line{flex:1;height:1px;opacity:.3}
+.arch-plane-lbl .lbl-txt{}
+
+.arch-plane.cp{border:1px solid rgba(0,229,255,.25);background:rgba(0,229,255,.025)}
+.arch-plane.cp .arch-plane-lbl{color:var(--cy)}
+.arch-plane.cp .lbl-dot{background:var(--cy)}
+.arch-plane.cp .lbl-line{background:var(--cy)}
+
+.arch-plane.wk{border:1px solid rgba(139,92,246,.28);background:rgba(139,92,246,.025)}
+.arch-plane.wk .arch-plane-lbl{color:#a78bfa}
+.arch-plane.wk .lbl-dot{background:#a78bfa}
+.arch-plane.wk .lbl-line{background:#a78bfa}
+
+.arch-plane.nw{border:1px solid rgba(139,92,246,.22);background:rgba(139,92,246,.018)}
+.arch-plane.nw .arch-plane-lbl{color:#a78bfa}
+.arch-plane.nw .lbl-dot{background:#a78bfa}
+.arch-plane.nw .lbl-line{background:#a78bfa}
+
+.arch-plane.wl{border:1px solid rgba(0,255,163,.2);background:rgba(0,255,163,.018)}
+.arch-plane.wl .arch-plane-lbl{color:var(--gn)}
+.arch-plane.wl .lbl-dot{background:var(--gn)}
+.arch-plane.wl .lbl-line{background:var(--gn)}
+
+.arch-plane.cs{border:1px solid rgba(255,184,0,.2);background:rgba(255,184,0,.018)}
+.arch-plane.cs .arch-plane-lbl{color:var(--am)}
+.arch-plane.cs .lbl-dot{background:var(--am)}
+.arch-plane.cs .lbl-line{background:var(--am)}
+
+/* Nodes grid */
+.arow{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.an{border:1px solid;border-radius:9px;padding:8px 13px;text-align:center;cursor:pointer;transition:all .22s;min-width:95px;position:relative}
+.an:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.an::after{content:'↗';position:absolute;top:4px;right:5px;font-size:8px;opacity:0;transition:opacity .2s}
+.an:hover::after{opacity:.5}
+.an.c{border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.08);color:var(--cy)}
+.an.c:hover{border-color:rgba(0,229,255,.7);background:rgba(0,229,255,.14);box-shadow:0 8px 24px rgba(0,229,255,.15)}
+.an.v{border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.08);color:#a78bfa}
+.an.v:hover{border-color:rgba(139,92,246,.7);background:rgba(139,92,246,.15);box-shadow:0 8px 24px rgba(139,92,246,.15)}
+.an.g{border-color:rgba(0,255,163,.35);background:rgba(0,255,163,.08);color:var(--gn)}
+.an.g:hover{border-color:rgba(0,255,163,.7);background:rgba(0,255,163,.15);box-shadow:0 8px 24px rgba(0,255,163,.12)}
+.an.a{border-color:rgba(255,184,0,.35);background:rgba(255,184,0,.08);color:var(--am)}
+.an.a:hover{border-color:rgba(255,184,0,.7);background:rgba(255,184,0,.15);box-shadow:0 8px 24px rgba(255,184,0,.12)}
+.an.gr{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--m2)}
+.an.gr:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+.an-n{font-size:10px;font-weight:700;letter-spacing:.01em}
+.an-s{font-size:9px;opacity:.6;margin-top:2px}
+
+/* Worker nodes layout */
+.workers{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.wbox{border:1.5px dashed rgba(139,92,246,.3);border-radius:12px;background:rgba(139,92,246,.02);padding:.8rem;flex:1;min-width:185px;max-width:260px;position:relative}
+.wbox::before{content:'VM';position:absolute;top:-9px;right:14px;font-size:9px;color:rgba(139,92,246,.6);background:var(--bg3);padding:0 6px;border-radius:10px;letter-spacing:.06em}
+.wlbl{font-size:9px;font-weight:700;color:#a78bfa;opacity:.8;margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase}
+.pchips{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.pchip{font-size:9px;font-family:'Fira Code',monospace;border:1px solid rgba(0,255,163,.3);background:rgba(0,255,163,.06);color:var(--gn);padding:3px 7px;border-radius:5px;cursor:pointer;transition:all .2s}
+.pchip:hover{background:rgba(0,255,163,.18);transform:scale(1.06);box-shadow:0 4px 10px rgba(0,255,163,.15)}
+
+/* Flow arrows between sections */
+.flow-arrow{display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 0;position:relative}
+.flow-arrow::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1px;height:100%;background:rgba(255,255,255,.05)}
+.fa-line{display:flex;align-items:center;gap:4px}
+.fa-label{font-size:9px;color:var(--mu);letter-spacing:.08em;text-transform:uppercase;background:var(--bg2);padding:2px 10px;border-radius:10px;border:1px solid var(--b);z-index:1;white-space:nowrap}
+.fa-arrow{color:rgba(0,229,255,.35);font-size:14px}
+
+/* Tooltip hint */
+.arch-hint{font-size:11px;color:var(--mu);text-align:center;margin-top:10px;letter-spacing:.04em}
+.arch-hint span{color:var(--cy);opacity:.7}
+.drawer{display:none;border:1px solid var(--b2);border-radius:13px;background:var(--bg3);margin-top:12px;overflow:hidden}
+.drawer.open{display:block;animation:si .25s ease}
+@keyframes si{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.dh{display:flex;align-items:center;gap:9px;padding:1rem 1.3rem;border-bottom:1px solid var(--b);background:var(--bg4)}
+.di{font-size:1.2rem}.dt{font-weight:700;font-size:1rem}
+.dbadge{font-family:'Fira Code',monospace;font-size:10px;padding:2px 8px;border-radius:18px;margin-left:auto;background:rgba(0,229,255,.08);color:var(--cy)}
+.dcl{background:none;border:none;color:var(--m2);font-size:16px;cursor:pointer;margin-left:5px;padding:3px 6px;border-radius:5px;transition:all .2s}
+.dcl:hover{color:var(--tx);background:var(--b)}
+.dbody{padding:1.3rem}
+.dtabs{display:flex;gap:2px;margin-bottom:1.2rem;border-bottom:1px solid var(--b);padding-bottom:0}
+.dtab{font-size:12px;font-weight:500;color:var(--m2);background:none;border:none;padding:7px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
+.dtab:hover{color:var(--tx)}.dtab.active{color:var(--cy);border-bottom-color:var(--cy)}
+.tc{display:none}.tc.active{display:block}
+.prose{font-size:13px;color:var(--m2);line-height:1.75}
+.prose strong{color:var(--tx)}.prose code{font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--cy)}
+.prose h4{font-size:12px;font-weight:700;color:var(--tx);margin:1rem 0 .4rem}
+.kvg{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:8px;margin:.8rem 0}
+.kv{background:var(--bg4);border:1px solid var(--b);border-radius:8px;padding:10px 12px}
+.kvk{font-size:10px;font-weight:700;color:var(--cy);margin-bottom:3px;font-family:'Fira Code',monospace}
+.kvv{font-size:11px;color:var(--m2);line-height:1.5}
+.kv.g .kvk{color:var(--gn)}.kv.v .kvk{color:#a78bfa}.kv.a .kvk{color:var(--am)}.kv.r .kvk{color:var(--rd)}
+.cb{background:var(--bg);border:1px solid var(--b);border-radius:8px;padding:.8rem 1rem;margin:8px 0;position:relative}
+.cb pre{font-family:'Fira Code',monospace;font-size:11px;color:#7dd3fc;overflow-x:auto;line-height:1.7;tab-size:2}
+.cbl{position:absolute;top:6px;right:38px;font-size:9px;color:var(--mu);font-family:'Fira Code',monospace;letter-spacing:.06em}
+.cbc{position:absolute;top:5px;right:6px;background:var(--bg3);border:1px solid var(--b);color:var(--m2);font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;font-family:'Fira Code',monospace;transition:all .2s}
+.cbc:hover{color:var(--cy);border-color:rgba(0,229,255,.35)}
+.qam{border:1px solid var(--b);border-radius:8px;margin-bottom:6px;overflow:hidden}
+.qam-q{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;transition:background .18s}
+.qam-q:hover{background:var(--bg4)}
+.qam-qt{font-size:12px;font-weight:500;color:var(--tx);flex:1}
+.qam-d{font-size:9px;font-family:'Fira Code',monospace;padding:2px 6px;border-radius:4px}
+.de{color:var(--gn);background:rgba(0,255,163,.1)}.dm{color:var(--am);background:rgba(255,184,0,.1)}.dh2{color:var(--rd);background:rgba(255,77,106,.1)}
+.qam-ch{color:var(--mu);font-size:10px;transition:transform .2s}
+.qam.open .qam-ch{transform:rotate(180deg)}
+.qam-a{display:none;padding:0 12px 12px;font-size:12px;color:var(--m2);line-height:1.7;border-top:1px solid var(--b);padding-top:10px}
+.qam.open .qam-a{display:block}.qam-a strong{color:var(--tx)}
+.qam-a code{font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--cy)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:12px}
+.tcard{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:1.1rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.tcard::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,255,.04),transparent 60%);opacity:0;transition:opacity .3s}
+.tcard:hover{border-color:rgba(0,229,255,.28);transform:translateY(-2px)}.tcard:hover::after{opacity:1}
+.tc-ic{font-size:1.3rem;margin-bottom:8px}.tc-no{font-family:'Fira Code',monospace;font-size:9px;color:var(--mu);margin-bottom:4px}
+.tc-nm{font-weight:700;font-size:.88rem;margin-bottom:4px}.tc-ds{font-size:11px;color:var(--m2);line-height:1.5}
+.tc-tg{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.ttg{font-size:10px;padding:2px 7px;border-radius:5px;background:var(--bg3);color:var(--m2);border:1px solid var(--b)}
+.ttg.e{color:var(--gn);border-color:rgba(0,255,163,.2);background:rgba(0,255,163,.06)}
+.ttg.m{color:var(--am);border-color:rgba(255,184,0,.2);background:rgba(255,184,0,.06)}
+.ttg.h{color:var(--rd);border-color:rgba(255,77,106,.2);background:rgba(255,77,106,.06)}
+.tdw{display:none;margin-top:10px;border:1px solid var(--b2);border-radius:12px;background:var(--bg3);overflow:hidden}
+.tdw.open{display:block;animation:si .25s ease}
+.qa-filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.3rem}
+.qf{font-size:11px;font-weight:600;padding:5px 13px;border-radius:20px;border:1px solid var(--b2);background:transparent;color:var(--m2);cursor:pointer;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
+.qf:hover{border-color:var(--cy);color:var(--cy)}
+.qf.active{background:rgba(0,229,255,.09);border-color:rgba(0,229,255,.32);color:var(--cy)}
+.qarow{border:1px solid var(--b);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.qarow-q{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;transition:background .18s}
+.qarow-q:hover{background:var(--bg3)}
+.qarow-qt{font-size:13px;font-weight:500;color:var(--tx);flex:1}
+.qarow-c{font-size:10px;font-family:'Fira Code',monospace;padding:2px 6px;border-radius:4px;border:1px solid var(--b);color:var(--m2);flex-shrink:0}
+.qarow-a{display:none;padding:12px 14px;border-top:1px solid var(--b);font-size:12px;color:var(--m2);line-height:1.75}
+.qarow.open .qarow-a{display:block}.qarow-a strong{color:var(--tx)}
+.qarow-a code{font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--cy)}
+.lcard{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:1.2rem;margin-bottom:12px}
+.lhd{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.lno{font-family:'Fira Code',monospace;font-size:11px;color:var(--cy);background:rgba(0,229,255,.09);width:27px;height:27px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ltit{font-weight:700;font-size:.9rem}
+.lgoal{font-size:12px;color:var(--m2);padding:8px 12px;background:var(--bg3);border-radius:7px;border-left:3px solid var(--cy);margin-bottom:12px;line-height:1.6}
+.lstep{display:flex;gap:8px;margin-bottom:6px}
+.ldot{width:17px;height:17px;border-radius:50%;background:var(--bg3);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'Fira Code',monospace;color:var(--mu);flex-shrink:0;margin-top:2px}
+.lcmd{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--b);border-radius:7px;padding:6px 10px;font-family:'Fira Code',monospace;font-size:11px;color:#7dd3fc;cursor:pointer;transition:all .2s;margin-top:3px}
+.lcmd:hover{border-color:rgba(0,229,255,.32)}
+.lchecks{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--b)}
+.chk{font-size:11px;color:var(--m2);cursor:pointer;padding:3px 10px;border-radius:18px;border:1px solid var(--b);transition:all .2s;user-select:none;display:flex;align-items:center;gap:4px}
+.chk:hover{border-color:var(--gn)}.chk.done{background:rgba(0,255,163,.07);color:var(--gn);border-color:rgba(0,255,163,.3)}
+.pb{background:var(--bg3);border:1px solid var(--b);border-radius:10px;padding:12px 16px;margin-bottom:1.3rem;display:flex;align-items:center;gap:13px}
+.pt{flex:1;height:5px;background:var(--bg);border-radius:3px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--cy),var(--gn));border-radius:3px;transition:width .4s}
+.pp{font-family:'Fira Code',monospace;font-size:11px;color:var(--gn);min-width:40px;text-align:right}
+.uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.uc-card{background:var(--card);border:1px solid var(--b);border-radius:14px;overflow:hidden;transition:all .22s}
+.uc-card:hover{border-color:rgba(0,229,255,.25);transform:translateY(-2px)}
+.uc-top{padding:1.3rem 1.3rem 1rem;cursor:pointer;display:flex;align-items:flex-start;gap:12px}
+.uc-emoji{font-size:2rem;flex-shrink:0;line-height:1}
+.uc-meta{flex:1}
+.uc-title{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.uc-desc{font-size:12px;color:var(--m2);line-height:1.5}
+.uc-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.uc-badge{font-size:10px;padding:2px 8px;border-radius:5px;font-family:'Fira Code',monospace}
+.uc-badge.cy{color:var(--cy);background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2)}
+.uc-badge.gn{color:var(--gn);background:rgba(0,255,163,.08);border:1px solid rgba(0,255,163,.2)}
+.uc-badge.am{color:var(--am);background:rgba(255,184,0,.08);border:1px solid rgba(255,184,0,.2)}
+.uc-badge.vt{color:#a78bfa;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2)}
+.uc-body{display:none;padding:0 1.3rem 1.3rem;border-top:1px solid var(--b)}
+.uc-card.open .uc-body{display:block}
+.uc-chevron{color:var(--mu);font-size:11px;margin-left:auto;margin-top:3px;transition:transform .2s;flex-shrink:0}
+.uc-card.open .uc-chevron{transform:rotate(180deg)}
+.uc-arch{background:var(--bg3);border-radius:9px;padding:12px;margin:12px 0;font-family:'Fira Code',monospace;font-size:11px;color:#7dd3fc;line-height:1.9}
+.uc-steps{list-style:none;counter-reset:uc}
+.uc-steps li{counter-increment:uc;display:flex;gap:10px;margin-bottom:8px;font-size:12px;color:var(--m2);line-height:1.6;align-items:flex-start}
+.uc-steps li::before{content:counter(uc);font-family:'Fira Code',monospace;font-size:10px;background:var(--bg3);border:1px solid var(--b);color:var(--cy);min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.uc-steps li strong{color:var(--tx)}
+.uc-highlight{background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.15);border-radius:8px;padding:10px 13px;margin-top:10px;font-size:12px;color:var(--m2);line-height:1.6}
+.uc-highlight strong{color:var(--cy)}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.cs-card{background:var(--card);border:1px solid var(--b);border-radius:13px;overflow:hidden}
+.cs-card-hd{padding:12px 15px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--b)}
+.cs-card-title{font-weight:700;font-size:.88rem;flex:1}
+.cs-card-tag{font-size:9px;font-family:'Fira Code',monospace;padding:2px 8px;border-radius:10px}
+.cs-rows{padding:8px 0}
+.cs-row{display:flex;align-items:center;gap:0;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;cursor:default}
+.cs-row:last-child{border-bottom:none}
+.cs-row:hover{background:rgba(255,255,255,.025)}
+.cs-cmd{font-family:'Fira Code',monospace;font-size:11px;color:#7dd3fc;padding:7px 14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-desc{font-size:11px;color:var(--mu);padding:7px 12px 7px 0;flex-shrink:0;text-align:right;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-copy{background:none;border:none;color:var(--mu);cursor:pointer;padding:5px 10px;font-size:11px;transition:color .2s;flex-shrink:0}
+.cs-copy:hover{color:var(--cy)}
+.cs-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.4rem}
+.cs-cat{font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;border:1px solid var(--b2);background:transparent;color:var(--m2);cursor:pointer;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
+.cs-cat:hover{border-color:var(--cy);color:var(--cy)}
+.cs-cat.active{background:rgba(0,229,255,.09);border-color:rgba(0,229,255,.32);color:var(--cy)}
+footer{border-top:1px solid var(--b);padding:2rem 1.5rem;position:relative;z-index:1;margin-top:2.5rem}
+.fi{max-width:750px;margin:0 auto;text-align:center}
+.fl{font-family:'Fira Code',monospace;font-weight:700;font-size:1rem;color:var(--cy);margin-bottom:6px}
+.fb{font-size:12px;color:var(--m2);margin-bottom:1rem;line-height:1.6}
+.fls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.fla{font-size:12px;color:var(--m2);text-decoration:none;display:flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid var(--b);border-radius:7px;transition:all .2s}
+.fla:hover{color:var(--cy);border-color:rgba(0,229,255,.28)}
+.fcp{font-family:'Fira Code',monospace;font-size:9px;color:var(--mu);margin-top:1.2rem;letter-spacing:.05em}
+@media(max-width:640px){h1{font-size:1.9rem}.nl-wrap .nl:not(.active){display:none}.workers{flex-direction:column}.wrap{padding:1.3rem .9rem}.stats{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wm">deven1003 · KubeLearn</div>
+<nav>
+  <div class="ni">
+    <a class="logo" href="#">
+      <div class="lb">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      </div>Kube<span>Learn</span>
+    </a>
+    <div class="nl-wrap">
+      <button class="nl active" onclick="gS('home')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home
+      </button>
+      <button class="nl" onclick="gS('arch')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M5 9v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M12 14v1"/></svg>Architecture
+      </button>
+      <button class="nl" onclick="gS('topics')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Topics
+      </button>
+      <button class="nl" onclick="gS('interview')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>Interview Q&amp;A
+      </button>
+      <button class="nl" onclick="gS('practice')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Labs
+      </button>
+      <button class="nl" onclick="gS('usecases')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Use Cases
+      </button>
+      <button class="nl" onclick="gS('cheatsheet')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Cheatsheet
+      </button>
+    </div>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">
+      <svg id="theme-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <span id="theme-label">Light</span>
+    </button>
+  </div>
+</nav>
+
+<div id="s-home" class="sec active">
+  <div class="hero">
+    <div class="eyb">⎈ Kubernetes Hub · by Deven Kalathiya</div>
+    <h1>Master <span class="gr">Kubernetes</span><br>the Right Way</h1>
+    <p class="hs">Click any component in the Architecture to get full details, YAML, and linked interview Q&amp;A. Topics, labs, and 30+ interview questions — all connected.</p>
+    <div class="hc">
+      <button class="btn bc" onclick="gS('arch')">Explore Architecture →</button>
+      <button class="btn bo" onclick="gS('interview')">Interview Prep</button>
+      <button class="btn bo" onclick="gS('practice')">Practice Labs</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="st"><div class="sn">20+</div><div class="sl">Components</div></div>
+    <div class="st"><div class="sn">30+</div><div class="sl">Interview Q&amp;A</div></div>
+    <div class="st"><div class="sn">5</div><div class="sl">Practice Labs</div></div>
+    <div class="st"><div class="sn">8</div><div class="sl">Topics</div></div>
+  </div>
+</div>
+
+<div id="s-arch" class="sec">
+<div class="wrap">
+  <div class="sh"><span class="stag">ARCHITECTURE</span><h2 class="stit">Click Any Component for Full Details</h2></div>
+  <div class="astage">
+   <div class="arch-wrap">
+
+    <!-- EXTERNAL USER - clearly visible outside cluster -->
+    <div style="display:flex;justify-content:center;margin-bottom:2px">
+      <div style="border:1.5px solid rgba(255,255,255,.2);border-radius:12px;padding:11px 28px;background:rgba(255,255,255,.05);cursor:pointer;transition:all .22s;text-align:center;min-width:240px" onclick="SD('user')"
+        onmouseover="this.style.borderColor='rgba(0,229,255,.6)';this.style.background='rgba(0,229,255,.08)'"
+        onmouseout="this.style.borderColor='rgba(255,255,255,.2)';this.style.background='rgba(255,255,255,.05)'">
+        <div style="font-family:'Fira Code',monospace;font-size:12px;font-weight:700;color:var(--tx)">👤 You / DevOps Engineer</div>
+        <div style="font-size:10px;color:var(--m2);margin-top:3px">kubectl CLI &nbsp;·&nbsp; CI/CD Pipelines &nbsp;·&nbsp; Helm</div>
+        <div style="font-size:9px;color:rgba(0,229,255,.5);margin-top:4px;font-family:'Fira Code',monospace">click to learn about kubectl ↗</div>
+      </div>
+    </div>
+
+    <!-- ARROW: user → API Server -->
+    <div class="flow-arrow" style="height:36px">
+      <svg width="180" height="36" style="overflow:visible">
+        <defs>
+          <marker id="ah-cy" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="rgba(0,229,255,.5)"/>
+          </marker>
+        </defs>
+        <line x1="90" y1="0" x2="90" y2="24" stroke="rgba(0,229,255,.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="90" y1="20" x2="90" y2="30" stroke="rgba(0,229,255,.5)" stroke-width="1.5" marker-end="url(#ah-cy)"/>
+      </svg>
+      <span class="fa-label" style="position:absolute">HTTPS · port 6443</span>
+    </div>
+
+    <!-- CLUSTER BOUNDARY -->
+    <div class="arch-cluster-box">
+      <div class="arch-cluster-label">⎈ &nbsp;KUBERNETES CLUSTER</div>
+
+      <!-- CONTROL PLANE -->
+      <div class="arch-plane cp">
+        <div class="arch-plane-lbl">
+          <span class="lbl-dot"></span>
+          <span class="lbl-txt">CONTROL PLANE &nbsp;—&nbsp; Brain of the Cluster</span>
+          <span class="lbl-line"></span>
+        </div>
+        <div class="arow">
+          <div class="an c" onclick="SD('apiserver')"><div class="an-n">API Server</div><div class="an-s">port 6443 · REST</div></div>
+          <div class="an c" onclick="SD('etcd')"><div class="an-n">etcd</div><div class="an-s">cluster state DB</div></div>
+          <div class="an c" onclick="SD('scheduler')"><div class="an-n">Scheduler</div><div class="an-s">assigns pods to nodes</div></div>
+          <div class="an c" onclick="SD('controller')"><div class="an-n">Controller Mgr</div><div class="an-s">reconcile loops</div></div>
+          <div class="an c" onclick="SD('ccm')"><div class="an-n">Cloud Controller</div><div class="an-s">AWS / GCP / Azure</div></div>
+        </div>
+      </div>
+
+      <!-- ARROW: Control Plane → Worker Nodes -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;padding:4px 0;position:relative">
+        <svg width="100%" height="40" style="max-width:600px;overflow:visible">
+          <defs>
+            <marker id="ah-v" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="rgba(139,92,246,.55)"/>
+            </marker>
+            <marker id="ah-vup" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+              <path d="M0,0 L8,4 L0,8 Z" fill="rgba(139,92,246,.4)"/>
+            </marker>
+          </defs>
+          <!-- down arrow -->
+          <line x1="35%" y1="4" x2="35%" y2="34" stroke="rgba(139,92,246,.45)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah-v)"/>
+          <!-- up arrow (status reports back) -->
+          <line x1="65%" y1="34" x2="65%" y2="4" stroke="rgba(139,92,246,.3)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah-vup)"/>
+          <text x="50%" y="22" text-anchor="middle" font-size="9" fill="rgba(139,92,246,.55)" font-family="Fira Code,monospace" letter-spacing="1">schedules &amp; manages &nbsp;/&nbsp; reports status</text>
+        </svg>
+      </div>
+
+      <!-- WORKER NODES -->
+      <div class="arch-plane wk">
+        <div class="arch-plane-lbl">
+          <span class="lbl-dot"></span>
+          <span class="lbl-txt">WORKER NODES &nbsp;—&nbsp; Where Your App Runs</span>
+          <span class="lbl-line"></span>
+        </div>
+        <div class="workers">
+          <div class="wbox">
+            <div class="wlbl">⬡ Node 1 &nbsp;(VM / Physical)</div>
+            <div class="arow" style="justify-content:flex-start;margin-bottom:6px">
+              <div class="an v" onclick="SD('kubelet')" style="min-width:78px"><div class="an-n">kubelet</div><div class="an-s">node agent</div></div>
+              <div class="an v" onclick="SD('kubeproxy')" style="min-width:82px"><div class="an-n">kube-proxy</div><div class="an-s">iptables</div></div>
+              <div class="an" onclick="SD('cri')" style="min-width:100px;border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.1);color:#fbbf24"><div class="an-n" style="color:#fbbf24;font-size:10px">🔧 CRI / containerd</div><div class="an-s" style="color:rgba(251,191,36,.7)">container runtime</div></div>
+            </div>
+            <div style="border-top:1px dashed rgba(0,255,163,.2);padding-top:6px;margin-top:6px">
+              <div style="font-size:9px;color:rgba(0,255,163,.5);margin-bottom:4px;letter-spacing:.06em;text-transform:uppercase">Running Pods</div>
+              <div class="pchips">
+                <div class="pchip" onclick="SD('pod')">📦 app-1</div>
+                <div class="pchip" onclick="SD('pod')">📦 app-2</div>
+                <div class="pchip" onclick="SD('sidecar')">📦 app+sidecar</div>
+              </div>
+            </div>
+          </div>
+          <div class="wbox">
+            <div class="wlbl">⬡ Node 2 &nbsp;(VM / Physical)</div>
+            <div class="arow" style="justify-content:flex-start;margin-bottom:6px">
+              <div class="an v" onclick="SD('kubelet')" style="min-width:78px"><div class="an-n">kubelet</div><div class="an-s">node agent</div></div>
+              <div class="an v" onclick="SD('kubeproxy')" style="min-width:82px"><div class="an-n">kube-proxy</div><div class="an-s">iptables</div></div>
+              <div class="an" onclick="SD('cri')" style="min-width:100px;border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.1);color:#fbbf24"><div class="an-n" style="color:#fbbf24;font-size:10px">🔧 CRI / containerd</div><div class="an-s" style="color:rgba(251,191,36,.7)">container runtime</div></div>
+            </div>
+            <div style="border-top:1px dashed rgba(0,255,163,.2);padding-top:6px;margin-top:2px">
+              <div style="font-size:9px;color:rgba(0,255,163,.5);margin-bottom:4px;letter-spacing:.06em;text-transform:uppercase">Running Pods</div>
+              <div class="pchips">
+                <div class="pchip" onclick="SD('pod')">📦 db-1</div>
+                <div class="pchip" onclick="SD('pod')">📦 cache-1</div>
+                <div class="pchip" onclick="SD('pod')">📦 worker-1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARROW: Nodes ↕ Networking -->
+      <div style="display:flex;align-items:center;justify-content:center;padding:4px 0">
+        <svg width="100%" height="36" style="max-width:500px;overflow:visible">
+          <defs>
+            <marker id="ah-v2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="rgba(139,92,246,.5)"/>
+            </marker>
+            <marker id="ah-v2u" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+              <path d="M0,0 L8,4 L0,8 Z" fill="rgba(139,92,246,.4)"/>
+            </marker>
+          </defs>
+          <line x1="30%" y1="6" x2="30%" y2="30" stroke="rgba(139,92,246,.4)" stroke-width="1.5" marker-end="url(#ah-v2)"/>
+          <line x1="70%" y1="30" x2="70%" y2="6" stroke="rgba(139,92,246,.35)" stroke-width="1.5" marker-end="url(#ah-v2u)"/>
+          <text x="50%" y="21" text-anchor="middle" font-size="9" fill="rgba(139,92,246,.5)" font-family="Fira Code,monospace" letter-spacing="1">routes traffic</text>
+        </svg>
+      </div>
+
+      <!-- NETWORKING -->
+      <div class="arch-plane nw">
+        <div class="arch-plane-lbl">
+          <span class="lbl-dot"></span>
+          <span class="lbl-txt">NETWORKING &amp; LOAD BALANCING</span>
+          <span class="lbl-line"></span>
+        </div>
+        <div class="arow">
+          <div class="an v" onclick="SD('clusterip')"><div class="an-n">ClusterIP</div><div class="an-s">internal only</div></div>
+          <div class="an v" onclick="SD('nodeport')"><div class="an-n">NodePort</div><div class="an-s">node:30000-32767</div></div>
+          <div class="an v" onclick="SD('loadbalancer')"><div class="an-n">LoadBalancer</div><div class="an-s">cloud LB · ELB</div></div>
+          <div class="an v" onclick="SD('ingress')"><div class="an-n">Ingress</div><div class="an-s">HTTP/S routing</div></div>
+          <div class="an v" onclick="SD('dns')"><div class="an-n">CoreDNS</div><div class="an-s">service discovery</div></div>
+          <div class="an v" onclick="SD('networkpolicy')"><div class="an-n">NetworkPolicy</div><div class="an-s">pod firewall</div></div>
+        </div>
+      </div>
+
+      <!-- SEPARATOR -->
+      <div style="display:flex;align-items:center;gap:10px;margin:10px 0 8px">
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)"></div>
+        <span style="font-size:9px;color:var(--mu);letter-spacing:.1em;text-transform:uppercase">also inside the cluster</span>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)"></div>
+      </div>
+
+      <!-- WORKLOADS -->
+      <div class="arch-plane wl" style="margin-bottom:8px">
+        <div class="arch-plane-lbl">
+          <span class="lbl-dot"></span>
+          <span class="lbl-txt">WORKLOAD RESOURCES</span>
+          <span class="lbl-line"></span>
+        </div>
+        <div class="arow">
+          <div class="an g" onclick="SD('pod')"><div class="an-n">Pod</div><div class="an-s">smallest unit</div></div>
+          <div class="an g" onclick="SD('deployment')"><div class="an-n">Deployment</div><div class="an-s">stateless apps</div></div>
+          <div class="an g" onclick="SD('replicaset')"><div class="an-n">ReplicaSet</div><div class="an-s">replica count</div></div>
+          <div class="an g" onclick="SD('statefulset')"><div class="an-n">StatefulSet</div><div class="an-s">stateful · DB</div></div>
+          <div class="an g" onclick="SD('daemonset')"><div class="an-n">DaemonSet</div><div class="an-s">1 per node</div></div>
+          <div class="an g" onclick="SD('job')"><div class="an-n">Job / CronJob</div><div class="an-s">batch tasks</div></div>
+          <div class="an g" onclick="SD('hpa')"><div class="an-n">HPA</div><div class="an-s">auto-scaling</div></div>
+        </div>
+      </div>
+
+      <!-- CONFIG & STORAGE -->
+      <div class="arch-plane cs">
+        <div class="arch-plane-lbl">
+          <span class="lbl-dot"></span>
+          <span class="lbl-txt">CONFIG, STORAGE &amp; SECURITY</span>
+          <span class="lbl-line"></span>
+        </div>
+        <div class="arow">
+          <div class="an a" onclick="SD('configmap')"><div class="an-n">ConfigMap</div><div class="an-s">app config</div></div>
+          <div class="an a" onclick="SD('secret')"><div class="an-n">Secret</div><div class="an-s">passwords · tokens</div></div>
+          <div class="an a" onclick="SD('pv')"><div class="an-n">PersistentVol</div><div class="an-s">storage resource</div></div>
+          <div class="an a" onclick="SD('pvc')"><div class="an-n">PVC</div><div class="an-s">storage claim</div></div>
+          <div class="an a" onclick="SD('storageclass')"><div class="an-n">StorageClass</div><div class="an-s">dynamic prov</div></div>
+          <div class="an a" onclick="SD('namespace')"><div class="an-n">Namespace</div><div class="an-s">isolation</div></div>
+          <div class="an a" onclick="SD('rbac')"><div class="an-n">RBAC</div><div class="an-s">access control</div></div>
+          <div class="an a" onclick="SD('serviceaccount')"><div class="an-n">ServiceAccount</div><div class="an-s">pod identity</div></div>
+        </div>
+      </div>
+
+    </div><!-- end cluster-box -->
+
+    <div class="arch-hint">Click any component <span>↗</span> to open full details, YAML examples, and linked interview Q&amp;A</div>
+   </div><!-- end arch-wrap -->
+  </div>
+  <div class="drawer" id="arch-drawer">
+    <div class="dh">
+      <span class="di" id="dd-i">📦</span>
+      <span class="dt" id="dd-t">Component</span>
+      <span class="dbadge" id="dd-b">Layer</span>
+      <button class="dcl" onclick="closeD()">✕</button>
+    </div>
+    <div class="dbody">
+      <div class="dtabs">
+        <button class="dtab active" onclick="swT(this,'ov')">Overview</button>
+        <button class="dtab" onclick="swT(this,'ym')">YAML / Commands</button>
+        <button class="dtab" onclick="swT(this,'qa')">Interview Q&amp;A</button>
+      </div>
+      <div class="tc active" id="tc-ov"></div>
+      <div class="tc" id="tc-ym"></div>
+      <div class="tc" id="tc-qa"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="s-topics" class="sec">
+<div class="wrap">
+  <div class="sh"><span class="stag">TOPICS</span><h2 class="stit">Topic-wise Deep Dives</h2></div>
+  <div class="tgrid" id="tgrid"></div>
+</div>
+</div>
+
+<div id="s-interview" class="sec">
+<div class="wrap">
+  <div class="sh"><span class="stag">INTERVIEW</span><h2 class="stit">30+ Interview Q&amp;A</h2></div>
+  <div class="qa-filters">
+    <button class="qf active" onclick="fQA('all',this)">All</button>
+    <button class="qf" onclick="fQA('easy',this)">Easy</button>
+    <button class="qf" onclick="fQA('medium',this)">Medium</button>
+    <button class="qf" onclick="fQA('hard',this)">Hard</button>
+    <button class="qf" onclick="fQA('control-plane',this)">Control Plane</button>
+    <button class="qf" onclick="fQA('workloads',this)">Workloads</button>
+    <button class="qf" onclick="fQA('networking',this)">Networking</button>
+    <button class="qf" onclick="fQA('storage',this)">Storage</button>
+  </div>
+  <div id="qa-list"></div>
+</div>
+</div>
+
+<div id="s-practice" class="sec">
+<div class="wrap">
+  <div class="sh"><span class="stag">LABS</span><h2 class="stit">Hands-on Practice Labs</h2></div>
+  <div class="pb">
+    <span style="font-size:12px;color:var(--m2);min-width:88px" id="plbl">0 / 15 tasks</span>
+    <div class="pt"><div class="pf" id="pfl" style="width:0%"></div></div>
+    <span class="pp" id="ppc">0%</span>
+  </div>
+  <div style="background:var(--bg3);border:1px solid var(--b);border-radius:8px;padding:10px 14px;margin-bottom:1.2rem;font-size:12px;color:var(--m2)">
+    ⚡ <strong style="color:var(--tx)">Free practice:</strong>
+    <a href="https://killercoda.com" target="_blank" style="color:var(--cy);text-decoration:none">killercoda.com</a> ·
+    <a href="https://labs.play-with-k8s.com" target="_blank" style="color:var(--cy);text-decoration:none">play-with-k8s.com</a> · Minikube
+  </div>
+  <div id="labs-list"></div>
+</div>
+</div>
+
+<div id="s-usecases" class="sec">
+<div class="wrap">
+  <div class="sh"><span class="stag">USE CASES</span><h2 class="stit">Practical Kubernetes Use Cases</h2></div>
+  <p style="font-size:13px;color:var(--m2);margin-bottom:1.5rem;max-width:600px;line-height:1.7">Real-world scenarios that show <strong style="color:var(--tx)">why</strong> each K8s feature exists and <strong style="color:var(--tx)">how</strong> they fit together. Click any card to expand the full setup.</p>
+  <div class="uc-grid" id="uc-grid"></div>
+</div>
+</div>
+
+<div id="s-cheatsheet" class="sec">
+<div class="wrap">
+  <div class="sh"><span class="stag">CHEATSHEET</span><h2 class="stit">kubectl Quick Reference</h2></div>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:1.4rem">
+    <p style="font-size:13px;color:var(--m2);max-width:500px;line-height:1.7;margin:0">60+ commands grouped by category. Click any row to copy the command.</p>
+    <button onclick="downloadPDF()" style="margin-left:auto;display:flex;align-items:center;gap:7px;background:var(--cy);color:#000;border:none;padding:9px 18px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter=''">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF
+    </button>
+  </div>
+  <div class="cs-filter">
+    <button class="cs-cat active" onclick="fCS('all',this)">All Commands</button>
+    <button class="cs-cat" onclick="fCS('get',this)">Get &amp; View</button>
+    <button class="cs-cat" onclick="fCS('create',this)">Create &amp; Apply</button>
+    <button class="cs-cat" onclick="fCS('debug',this)">Debug</button>
+    <button class="cs-cat" onclick="fCS('scale',this)">Scale &amp; Update</button>
+    <button class="cs-cat" onclick="fCS('config',this)">Config &amp; Context</button>
+    <button class="cs-cat" onclick="fCS('delete',this)">Delete</button>
+  </div>
+  <div class="cs-grid" id="cs-grid"></div>
+</div>
+</div>
+
+<footer>
+  <div class="fi">
+    <div class="fl">⎈ KubeLearn</div>
+    <div class="fb">Built by <strong style="color:var(--tx)">Deven Kalathiya</strong> — DevOps &amp; AI Engineer<br>Open for everyone. Learn Kubernetes the right way.</div>
+    <div class="fls">
+      <a class="fla" href="https://deven1003.github.io/portfolio_dk_devops_ai" target="_blank">🌐 Portfolio</a>
+      <a class="fla" href="https://github.com/deven1003" target="_blank">⌥ github/deven1003</a>
+      <a class="fla" href="https://www.linkedin.com/in/deven-kalathiya/" target="_blank">in LinkedIn</a>
+    </div>
+    <div class="fcp">© 2025 KubeLearn · Created by Deven Kalathiya (deven1003) · All rights reserved</div>
+  </div>
+</footer>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────
+const QA=[
+  {id:'what-is-k8s',d:'easy',c:'workloads',q:'What is Kubernetes and why do we use it?',a:'Kubernetes (K8s) is an <strong>open-source container orchestration platform</strong> that automates deployment, scaling, and management of containerized applications. With Docker alone you run containers manually on one machine. K8s adds: <strong>self-healing</strong> (restarts crashed pods), <strong>auto-scaling</strong> (HPA), <strong>load balancing</strong>, <strong>rolling updates</strong> (zero downtime), and multi-node scheduling automatically.'},
+  {id:'pod-vs-container',d:'easy',c:'workloads',q:'Difference between a Pod and a Container?',a:'A <strong>Container</strong> is a Docker concept — a running process with its own filesystem. A <strong>Pod</strong> is K8s\'s smallest unit — a wrapper around one or more containers that share the same network (same IP) and can share volumes. Containers in a Pod communicate via <code>localhost</code>. Think: Container = worker, Pod = their shared office.'},
+  {id:'deploy-vs-pod',d:'easy',c:'workloads',q:'What is a Deployment? How is it different from a Pod?',a:'A raw <strong>Pod</strong> — if it crashes, it stays dead. A <strong>Deployment</strong> manages Pods: ensures desired replicas always run (self-healing), handles rolling updates, and keeps rollback history. <strong>Rule:</strong> never create Pods directly in production — always use a Deployment.'},
+  {id:'service-types',d:'easy',c:'networking',q:'What is a Service? What are the types?',a:'A <strong>Service</strong> gives a stable IP/DNS to route traffic to Pods (since Pod IPs change on restart). Types: <code>ClusterIP</code> — internal only (default). <code>NodePort</code> — exposes on node port 30000-32767. <code>LoadBalancer</code> — provisions cloud LB (AWS/GCP). <code>ExternalName</code> — maps to external DNS.'},
+  {id:'kubectl-cmds',d:'easy',c:'workloads',q:'What is kubectl? Name 5 essential commands.',a:'<strong>kubectl</strong> is the CLI to talk to the K8s API Server. 5 must-know commands:<br>• <code>kubectl get pods</code> — list pods<br>• <code>kubectl apply -f file.yaml</code> — create/update<br>• <code>kubectl describe pod &lt;n&gt;</code> — full details + events<br>• <code>kubectl logs &lt;pod&gt;</code> — container logs<br>• <code>kubectl exec -it &lt;pod&gt; -- bash</code> — shell into pod'},
+  {id:'namespace',d:'easy',c:'workloads',q:'What is a Namespace?',a:'A <strong>Namespace</strong> is a virtual cluster inside a physical cluster — for isolation between teams/environments. Defaults: <code>default</code> (your resources), <code>kube-system</code> (K8s components). Common pattern: <code>dev</code>, <code>staging</code>, <code>production</code> namespaces for RBAC and resource quota isolation.'},
+  {id:'etcd-what',d:'easy',c:'control-plane',q:'What is etcd and what does it store?',a:'<strong>etcd</strong> is a distributed key-value store — K8s\'s database. It stores every cluster resource: pods, deployments, services, secrets, configmaps, RBAC rules, nodes. The API Server reads/writes etcd for every operation. If etcd is healthy, the cluster has a source of truth.'},
+  {id:'configmap-secret',d:'medium',c:'storage',q:'Difference between ConfigMap and Secret?',a:'Both inject config into Pods without hardcoding in the image.<br><strong>ConfigMap</strong> — non-sensitive data (DB_HOST, APP_ENV). Stored as plain text in etcd.<br><strong>Secret</strong> — sensitive data (passwords, tokens, TLS certs). Stored base64-encoded. Has stricter RBAC.<br><strong>Key rule:</strong> base64 is encoding, not encryption. Never store real secrets in ConfigMaps. Use Vault or AWS Secrets Manager in production.'},
+  {id:'replicaset',d:'medium',c:'workloads',q:'What is a ReplicaSet? How does it relate to Deployment?',a:'A <strong>ReplicaSet</strong> ensures N pod replicas always run. Hierarchy: <code>Deployment → ReplicaSet → Pods</code>. Deployment creates and manages ReplicaSets. During rolling update, Deployment creates a NEW ReplicaSet (new version) and scales down the OLD one gradually. You never create ReplicaSets directly — always use Deployments.'},
+  {id:'probes',d:'medium',c:'workloads',q:'Liveness probe vs Readiness probe?',a:'<strong>Liveness</strong> — "Is container alive?" If fails → K8s restarts the container. Used to detect deadlocks.<br><strong>Readiness</strong> — "Ready to receive traffic?" If fails → pod removed from Service endpoints (no traffic sent). No restart.<br>Simple rule: Liveness = restart if broken. Readiness = pull from LB if not ready.'},
+  {id:'rolling-update',d:'medium',c:'workloads',q:'What is a rolling update? How does rollback work?',a:'A <strong>rolling update</strong> replaces old pods with new ones gradually — zero downtime. K8s creates new pods one-by-one, only terminating old ones after new ones pass health checks.<br>Controlled by <code>maxSurge</code> (extra pods allowed) and <code>maxUnavailable</code>.<br>Rollback: <code>kubectl rollout undo deployment/my-app</code><br>History: <code>kubectl rollout history deployment/my-app</code>'},
+  {id:'etcd-down',d:'medium',c:'control-plane',q:'What happens if etcd goes down?',a:'API Server cannot read/write state — you can\'t create/update/delete resources. However, <strong>existing pods keep running</strong> — kubelets have local state and continue managing containers. This is why etcd runs with odd replicas (3 or 5) using Raft consensus for HA. Always take etcd backups in production.'},
+  {id:'ingress-vs-lb',d:'medium',c:'networking',q:'What is Ingress? How is it different from LoadBalancer?',a:'A <strong>LoadBalancer</strong> service = one cloud LB per service (expensive). <strong>Ingress</strong> = single entry point that routes HTTP/HTTPS to multiple services by path/hostname — one LB for all.<br>Example: <code>/api → api-svc</code>, <code>/web → frontend-svc</code>. Needs an Ingress Controller (nginx-ingress, Traefik). Much cheaper and more flexible for multi-service apps.'},
+  {id:'crashloop',d:'medium',c:'workloads',q:'What is CrashLoopBackOff? How do you debug it?',a:'Container starts, crashes, K8s restarts it repeatedly — adding exponential backoff delay.<br>Debug: 1. <code>kubectl describe pod &lt;n&gt;</code> → Events. 2. <code>kubectl logs &lt;pod&gt;</code> → error before crash. 3. <code>kubectl logs --previous</code> → last crashed instance logs.<br>Common causes: wrong entrypoint, missing env vars, bad config, port conflict, app startup error.'},
+  {id:'statefulset-vs-deploy',d:'hard',c:'workloads',q:'StatefulSet vs Deployment — what is the difference?',a:'<strong>Deployment</strong> — stateless apps. Pods interchangeable, random names (app-7d9f-xyz). Any pod replaced with a fresh one.<br><strong>StatefulSet</strong> — stateful apps. Pods get stable ordered names: pod-0, pod-1, pod-2. Each pod has its own PVC (persists on restart). Pods start/stop in order.<br>Use StatefulSet for: PostgreSQL, MySQL, Kafka, Zookeeper, Elasticsearch, Redis Cluster.'},
+  {id:'taints',d:'hard',c:'workloads',q:'What are taints and tolerations?',a:'<strong>Taints</strong> on Nodes repel Pods. A tainted node says "no pods unless you tolerate this taint."<br><strong>Tolerations</strong> on Pods allow scheduling on tainted nodes.<br>Use case: GPU nodes — <code>kubectl taint nodes gpu-node gpu=true:NoSchedule</code>. Only ML pods with matching toleration get scheduled there. Keeps web pods off expensive hardware.'},
+  {id:'hpa-how',d:'hard',c:'workloads',q:'How does HPA (Horizontal Pod Autoscaler) work?',a:'HPA scales pod replicas based on CPU/memory or custom metrics.<br>Flow: Metrics Server collects usage → HPA checks every 15s → if CPU > target → scales up → if CPU low sustained → scales down.<br>Formula: <code>desiredReplicas = ceil(current × currentMetric/targetMetric)</code><br>Requires Metrics Server. Custom metrics (req/s, queue depth) need Prometheus Adapter.'},
+  {id:'daemonset',d:'medium',c:'workloads',q:'What is a DaemonSet?',a:'A <strong>DaemonSet</strong> ensures exactly one pod runs on every node. When nodes are added/removed, pods follow automatically.<br>kube-proxy and CNI plugins (Calico, Cilium) run as DaemonSets.<br>Common uses: log collectors (Fluentd, Filebeat), monitoring agents (node-exporter, Datadog), security agents, storage daemons.'},
+  {id:'resource-limits',d:'medium',c:'workloads',q:'What are resource requests and limits?',a:'<strong>Requests</strong> — guaranteed resources. Scheduler uses this to pick a node that can fit the pod.<br><strong>Limits</strong> — maximum. CPU throttled, memory causes OOMKill if exceeded.<br>Example: <code>requests: cpu: 250m, memory: 64Mi</code> / <code>limits: cpu: 500m, memory: 128Mi</code><br>Always set both. Pods without limits can crash the node.'},
+  {id:'network-policy',d:'hard',c:'networking',q:'What is a NetworkPolicy?',a:'A <strong>NetworkPolicy</strong> is a pod-level firewall. By default all pods can talk to all pods. NetworkPolicies restrict traffic by labels, namespaces, and ports.<br>Example: allow only frontend pods to reach backend on port 8080. Block all ingress except monitoring namespace.<br>Requires CNI with support: Calico, Cilium, Weave. Flannel does NOT support NetworkPolicy.'},
+  {id:'pv-pvc',d:'medium',c:'storage',q:'What is a PersistentVolume and PVC?',a:'<strong>PersistentVolume (PV)</strong> — a piece of cluster storage provisioned by admin or dynamically by StorageClass. Independent of pod lifecycle.<br><strong>PVC</strong> — a pod\'s request for storage. K8s binds PVC to a matching PV (or creates one via StorageClass).<br>Flow: Pod → PVC (need 5Gi RWO) → StorageClass → creates PV (AWS EBS) → mounted at /data.'},
+  {id:'coredns',d:'medium',c:'networking',q:'What is CoreDNS in Kubernetes?',a:'<strong>CoreDNS</strong> is the cluster DNS server. It runs as a Deployment in kube-system and enables service discovery by name.<br>DNS format: <code>service.namespace.svc.cluster.local</code><br>Within same namespace: just use <code>service-name</code>.<br>Every pod is auto-configured to use CoreDNS via /etc/resolv.conf.'},
+  {id:'rbac-what',d:'hard',c:'workloads',q:'What is RBAC in Kubernetes?',a:'RBAC (Role-Based Access Control) regulates who can do what with K8s resources.<br><strong>Role</strong> — namespace-scoped permissions. <strong>ClusterRole</strong> — cluster-wide. <strong>RoleBinding</strong> — binds Role to user/SA. <strong>ClusterRoleBinding</strong> — binds ClusterRole cluster-wide.<br>Best practice: least-privilege — only give pods the permissions they actually need via ServiceAccounts.'},
+  {id:'sa-what',d:'medium',c:'workloads',q:'What is a ServiceAccount?',a:'A <strong>ServiceAccount</strong> is an identity for processes running in a Pod. Pods use SAs to authenticate with the API Server.<br>Default: every pod gets the "default" SA in its namespace (with minimal permissions).<br>Best practice: create dedicated SAs per app with only needed RBAC permissions. Never use the default SA for apps that need API access.'},
+  {id:'storageclass',d:'hard',c:'storage',q:'What is a StorageClass?',a:'A <strong>StorageClass</strong> enables <strong>dynamic provisioning</strong> — when a PVC is created, K8s automatically creates a PV using the StorageClass provisioner. No manual PV creation needed.<br>Cloud examples: <code>gp2</code> (AWS EBS), <code>standard</code> (GCP PD), <code>managed-premium</code> (Azure Disk).<br>Parameters: provisioner, type (SSD/HDD), reclaim policy, binding mode.'},
+];
+
+const COMPONENTS={
+  user:{i:'👤',t:'kubectl & Users',b:'Client',ov:`<div class="prose"><p><strong>kubectl</strong> is your command-line tool to interact with Kubernetes. Every command goes through the API Server over HTTPS (port 6443). Auth is handled via <code>~/.kube/config</code> — certificates, tokens, or OIDC.</p><div class="kvg"><div class="kv"><div class="kvk">KUBECONFIG</div><div class="kvv">~/.kube/config stores clusters, users, contexts</div></div><div class="kv g"><div class="kvk">CONTEXT</div><div class="kvv">kubectl config use-context prod — switch clusters</div></div><div class="kv v"><div class="kvk">AUTH</div><div class="kvv">Certificates, Bearer tokens, OIDC, Service Account tokens</div></div></div><h4>Essential kubectl commands</h4><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">kubectl get pods -A\nkubectl apply -f file.yaml\nkubectl describe pod &lt;name&gt;\nkubectl logs &lt;pod&gt; -f\nkubectl exec -it &lt;pod&gt; -- bash\nkubectl port-forward svc/my-svc 8080:80</pre></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># View and switch contexts\nkubectl config get-contexts\nkubectl config use-context my-cluster\n\n# Useful aliases\nalias k=kubectl\nalias kgp='kubectl get pods'\nalias kgs='kubectl get svc'\nalias kgn='kubectl get nodes'\n\n# Dry run (preview changes)\nkubectl apply -f deployment.yaml --dry-run=client</pre></div>`,qa:['kubectl-cmds','what-is-k8s']},
+  apiserver:{i:'🖥️',t:'API Server',b:'Control Plane',ov:`<div class="prose"><p>The <strong>API Server (kube-apiserver)</strong> is the single front-door to the cluster. Every request — from kubectl, Scheduler, Controllers, kubelets, and CI/CD — goes through it. Nothing bypasses it.</p><div class="kvg"><div class="kv"><div class="kvk">PORT</div><div class="kvv">6443 (HTTPS) — REST API</div></div><div class="kv g"><div class="kvk">AUTH</div><div class="kvv">Authenticates every request: certs, tokens, OIDC</div></div><div class="kv v"><div class="kvk">VALIDATES</div><div class="kvv">YAML schema + RBAC + admission controllers</div></div><div class="kv a"><div class="kvk">STORES</div><div class="kvv">Persists all accepted state to etcd</div></div><div class="kv r"><div class="kvk">STATELESS</div><div class="kvv">Horizontally scalable — multiple replicas in HA setups</div></div></div><h4>kubectl apply flow</h4><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">kubectl apply -f pod.yaml\n  → API Server (auth + validate)\n  → etcd (save desired state)\n  → Scheduler (assign to node)\n  → kubelet on node (start container)</pre></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># Health check\nkubectl get componentstatuses\n\n# API server info\nkubectl cluster-info\n\n# All API resources\nkubectl api-resources\n\n# API Server in kube-system\nkubectl get pods -n kube-system | grep apiserver</pre></div>`,qa:['what-is-k8s','etcd-what','kubectl-cmds']},
+  etcd:{i:'🗄️',t:'etcd',b:'Control Plane',ov:`<div class="prose"><p><strong>etcd</strong> is a distributed key-value store — the database of K8s. Every resource you create is stored here as serialized JSON/protobuf.</p><div class="kvg"><div class="kv"><div class="kvk">TYPE</div><div class="kvv">Distributed KV store using Raft consensus algorithm</div></div><div class="kv g"><div class="kvk">QUORUM</div><div class="kvv">Needs majority — run odd replicas: 3 or 5. 2 nodes = no quorum</div></div><div class="kv v"><div class="kvk">PORTS</div><div class="kvv">2379 (client), 2380 (peer-to-peer)</div></div><div class="kv r"><div class="kvk">IF DOWN</div><div class="kvv">Can't create/update/delete. Existing pods keep running.</div></div><div class="kv a"><div class="kvk">BACKUP</div><div class="kvv">etcdctl snapshot save — critical for disaster recovery</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># Backup etcd (run this regularly in production!)\netcdctl snapshot save /backup/snapshot.db \\\n  --endpoints=https://127.0.0.1:2379 \\\n  --cacert=/etc/kubernetes/pki/etcd/ca.crt \\\n  --cert=/etc/kubernetes/pki/etcd/server.crt \\\n  --key=/etc/kubernetes/pki/etcd/server.key\n\n# Restore\netcdctl snapshot restore /backup/snapshot.db</pre></div>`,qa:['etcd-what','etcd-down']},
+  scheduler:{i:'📅',t:'Scheduler',b:'Control Plane',ov:`<div class="prose"><p>The <strong>kube-scheduler</strong> watches for new Pods with no node assigned and selects the best node for them based on resources, policies, and constraints.</p><div class="kvg"><div class="kv"><div class="kvk">FILTERING</div><div class="kvv">Removes nodes that don't meet requirements (CPU, memory, taints, affinity)</div></div><div class="kv g"><div class="kvk">SCORING</div><div class="kvv">Ranks remaining nodes (least loaded, balanced spread)</div></div><div class="kv v"><div class="kvk">ASSIGNS</div><div class="kvv">Writes nodeName to Pod spec via API Server</div></div><div class="kv a"><div class="kvk">FACTORS</div><div class="kvv">resource requests, nodeSelector, affinity, taints/tolerations, topology spread</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre># Force pod to specific node\nspec:\n  nodeName: node1\n\n# Node selector\nspec:\n  nodeSelector:\n    disktype: ssd\n\n# Node affinity\nspec:\n  affinity:\n    nodeAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n        nodeSelectorTerms:\n        - matchExpressions:\n          - key: zone\n            operator: In\n            values: [us-east-1a]</pre></div>`,qa:['taints','hpa-how']},
+  controller:{i:'🔄',t:'Controller Manager',b:'Control Plane',ov:`<div class="prose"><p>The <strong>kube-controller-manager</strong> runs multiple controllers in one binary. Each controller is a reconciliation loop — watches desired vs actual state and acts to close the gap.</p><div class="kvg"><div class="kv"><div class="kvk">Node Controller</div><div class="kvv">Detects node failures, marks as unreachable, evicts pods</div></div><div class="kv g"><div class="kvk">ReplicaSet Controller</div><div class="kvv">Ensures correct pod count — creates/deletes pods</div></div><div class="kv v"><div class="kvk">Endpoint Controller</div><div class="kvv">Populates Endpoints — links Services to Pod IPs</div></div><div class="kv a"><div class="kvk">Job Controller</div><div class="kvv">Tracks job completion, retries failed pods</div></div></div><h4>The reconciliation loop</h4><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">loop forever:\n  desired = get_desired_state()\n  current = get_current_state()\n  if desired != current: reconcile()</pre></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># Check controller manager\nkubectl get componentstatuses\nkubectl get pods -n kube-system | grep controller</pre></div>`,qa:['replicaset','rolling-update']},
+  ccm:{i:'☁️',t:'Cloud Controller Manager',b:'Control Plane',ov:`<div class="prose"><p>The <strong>Cloud Controller Manager (CCM)</strong> integrates K8s with cloud provider APIs. It separates cloud-specific logic from core K8s so different cloud providers can implement their own integration.</p><div class="kvg"><div class="kv"><div class="kvk">Node Controller</div><div class="kvv">Checks cloud API when node stops responding — was it deleted?</div></div><div class="kv g"><div class="kvk">Service Controller</div><div class="kvv">Creates cloud LBs when you create Service type=LoadBalancer</div></div><div class="kv v"><div class="kvk">Route Controller</div><div class="kvv">Sets up routes in cloud network infrastructure</div></div></div><h4>What it enables</h4><p>When you run <code>kubectl expose --type=LoadBalancer</code>, CCM calls AWS/GCP/Azure API to provision an actual load balancer automatically. Without CCM, you'd do this manually.</p></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># CCM runs in kube-system\nkubectl get pods -n kube-system | grep cloud-controller\n\n# When you create a LB Service, CCM provisions it\nkubectl expose deployment my-app --type=LoadBalancer --port=80\nkubectl get svc my-app --watch  # watch for EXTERNAL-IP</pre></div>`,qa:['service-types','ingress-vs-lb']},
+  kubelet:{i:'🤖',t:'kubelet',b:'Worker Node',ov:`<div class="prose"><p>The <strong>kubelet</strong> is a node agent running on every worker node. It bridges the API Server and the container runtime on each node.</p><div class="kvg"><div class="kv"><div class="kvk">WATCHES</div><div class="kvv">API Server for pods assigned to its node</div></div><div class="kv g"><div class="kvk">STARTS</div><div class="kvv">Tells CRI (containerd) to pull image and start containers</div></div><div class="kv v"><div class="kvk">REPORTS</div><div class="kvv">Sends pod status to API Server every few seconds</div></div><div class="kv a"><div class="kvk">PROBES</div><div class="kvv">Runs liveness and readiness probes</div></div><div class="kv r"><div class="kvk">RESTARTS</div><div class="kvv">Restarts failing containers per restartPolicy</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># kubelet is a systemd service\nsystemctl status kubelet\n\n# Kubelet config\ncat /var/lib/kubelet/config.yaml\n\n# See node status (kubelet reports this)\nkubectl get nodes\nkubectl describe node &lt;node-name&gt;</pre></div>`,qa:['probes','crashloop']},
+  kubeproxy:{i:'🌐',t:'kube-proxy',b:'Worker Node',ov:`<div class="prose"><p><strong>kube-proxy</strong> runs on every node and maintains iptables/IPVS rules that enable the Service abstraction — routing traffic to the right pods regardless of which node they're on.</p><div class="kvg"><div class="kv"><div class="kvk">MODE</div><div class="kvv">iptables (default) or IPVS (faster for large clusters)</div></div><div class="kv g"><div class="kvk">WATCHES</div><div class="kvv">API Server for Service and Endpoint changes</div></div><div class="kv v"><div class="kvk">MANAGES</div><div class="kvv">iptables rules: ClusterIP → Pod IP round-robin</div></div></div><h4>Traffic flow when calling a Service</h4><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">Request → ClusterIP:80\n  → kube-proxy iptables\n  → picks healthy Pod IP\n  → Pod receives request</pre></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># kube-proxy runs as a DaemonSet\nkubectl get pods -n kube-system | grep kube-proxy\n\n# Check iptables rules\nsudo iptables -t nat -L KUBE-SERVICES | head -20\n\n# View Service endpoints\nkubectl get endpoints &lt;service-name&gt;</pre></div>`,qa:['service-types','ingress-vs-lb']},
+  cri:{i:'📦',t:'Container Runtime (CRI)',b:'Worker Node',ov:`<div class="prose"><p>The <strong>Container Runtime Interface (CRI)</strong> is the plugin layer allowing kubelet to use different container runtimes. The standard today is <strong>containerd</strong>.</p><div class="kvg"><div class="kv"><div class="kvk">containerd</div><div class="kvv">Default in most K8s distros (EKS, GKE, kubeadm)</div></div><div class="kv g"><div class="kvk">CRI-O</div><div class="kvv">Lightweight, used in OpenShift</div></div><div class="kv r"><div class="kvk">Docker removed</div><div class="kvv">K8s removed dockershim in v1.24. containerd is the standard now.</div></div></div><p>kubelet says "start this container" → CRI (containerd) pulls image, creates container, sets up Linux namespaces and cgroups.</p></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># Check runtime on nodes\nkubectl get nodes -o wide  # see CONTAINER-RUNTIME column\n\n# crictl — like docker CLI for CRI\ncrictl ps\ncrictl images\ncrictl logs &lt;container-id&gt;</pre></div>`,qa:['pod-vs-container']},
+  pod:{i:'📦',t:'Pod',b:'Workload',ov:`<div class="prose"><p>A <strong>Pod</strong> is the smallest deployable unit in K8s — a wrapper for one or more containers sharing the same network (IP) and optionally storage.</p><div class="kvg"><div class="kv"><div class="kvk">NETWORK</div><div class="kvv">Each Pod gets a unique cluster IP. Containers share it via localhost.</div></div><div class="kv g"><div class="kvk">LIFECYCLE</div><div class="kvv">Pending → Running → Succeeded / Failed / Unknown</div></div><div class="kv v"><div class="kvk">EPHEMERAL</div><div class="kvv">Pods are mortal. Never expect a pod to survive node failures.</div></div><div class="kv a"><div class="kvk">RESTART</div><div class="kvv">Always / OnFailure / Never — restartPolicy</div></div></div><h4>Common error states</h4><div class="kvg"><div class="kv r"><div class="kvk">CrashLoopBackOff</div><div class="kvv">Starts and crashes repeatedly. Check kubectl logs --previous</div></div><div class="kv a"><div class="kvk">ImagePullBackOff</div><div class="kvv">Wrong image name/tag or private registry without imagePullSecret</div></div><div class="kv v"><div class="kvk">Pending</div><div class="kvv">No node has enough resources. Check describe pod → Events</div></div><div class="kv r"><div class="kvk">OOMKilled</div><div class="kvv">Exceeded memory limit. Increase limits or fix memory leak.</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: Pod\nmetadata:\n  name: my-pod\n  labels:\n    app: my-app\nspec:\n  containers:\n  - name: app\n    image: nginx:1.25\n    ports:\n    - containerPort: 80\n    resources:\n      requests:\n        cpu: "250m"\n        memory: "64Mi"\n      limits:\n        cpu: "500m"\n        memory: "128Mi"\n    livenessProbe:\n      httpGet:\n        path: /healthz\n        port: 80\n      initialDelaySeconds: 10\n    readinessProbe:\n      httpGet:\n        path: /ready\n        port: 80\n  restartPolicy: Always</pre></div>`,qa:['pod-vs-container','probes','crashloop','resource-limits']},
+  sidecar:{i:'🔗',t:'Sidecar Container',b:'Pod Pattern',ov:`<div class="prose"><p>A <strong>sidecar</strong> is an additional container in the same Pod enhancing the main container. They share network (localhost) and volumes.</p><div class="kvg"><div class="kv g"><div class="kvk">Log Shipper</div><div class="kvv">Reads logs from shared volume, ships to Elasticsearch/Loki</div></div><div class="kv v"><div class="kvk">Service Mesh</div><div class="kvv">Envoy/Istio sidecar intercepts all traffic for mTLS, observability</div></div><div class="kv a"><div class="kvk">Init Container</div><div class="kvv">Runs before main — waits for DB, runs migrations, downloads config</div></div><div class="kv"><div class="kvk">Config Sync</div><div class="kvv">Pulls config from Git/S3 into shared volume for main container</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>spec:\n  initContainers:\n  - name: wait-for-db\n    image: busybox\n    command: ['sh','-c','until nc -z db 5432; do sleep 2; done']\n\n  containers:\n  - name: app\n    image: my-app:v1\n    volumeMounts:\n    - name: logs\n      mountPath: /var/log/app\n\n  - name: log-shipper    # sidecar\n    image: fluent/fluentbit\n    volumeMounts:\n    - name: logs\n      mountPath: /var/log/app\n\n  volumes:\n  - name: logs\n    emptyDir: {}</pre></div>`,qa:['pod-vs-container']},
+  deployment:{i:'🚀',t:'Deployment',b:'Workload',ov:`<div class="prose"><p>A <strong>Deployment</strong> is the standard way to run stateless apps. It manages a ReplicaSet which manages Pods — giving you self-healing, scaling, rolling updates, and rollback.</p><div class="kvg"><div class="kv"><div class="kvk">SELF-HEALING</div><div class="kvv">Pod dies → Deployment instantly creates a new one</div></div><div class="kv g"><div class="kvk">SCALING</div><div class="kvv">kubectl scale deployment my-app --replicas=5</div></div><div class="kv v"><div class="kvk">ROLLING UPDATE</div><div class="kvv">Replaces pods one-by-one — zero downtime</div></div><div class="kv a"><div class="kvk">ROLLBACK</div><div class="kvv">kubectl rollout undo deployment/my-app</div></div><div class="kv r"><div class="kvk">HISTORY</div><div class="kvv">kubectl rollout history — keeps last 10 revisions</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: my-app\n  strategy:\n    type: RollingUpdate\n    rollingUpdate:\n      maxSurge: 1\n      maxUnavailable: 0\n  template:\n    metadata:\n      labels:\n        app: my-app\n    spec:\n      containers:\n      - name: my-app\n        image: nginx:1.25\n        ports:\n        - containerPort: 80</pre></div>`,qa:['deploy-vs-pod','replicaset','rolling-update']},
+  replicaset:{i:'🔁',t:'ReplicaSet',b:'Workload',ov:`<div class="prose"><p>A <strong>ReplicaSet</strong> ensures N pod replicas always run. It's the self-healing mechanism behind Deployments.</p><div class="kvg"><div class="kv"><div class="kvk">PURPOSE</div><div class="kvv">Guarantee N identical pods always running</div></div><div class="kv g"><div class="kvk">SELECTOR</div><div class="kvv">Uses label selectors to count and own pods</div></div><div class="kv v"><div class="kvk">ROLLING UPDATE</div><div class="kvv">Deployment creates NEW RS, scales down OLD one simultaneously</div></div><div class="kv r"><div class="kvk">DON'T CREATE</div><div class="kvv">Always use Deployments — they add rolling update + history</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># ReplicaSets are auto-created by Deployments\nkubectl get replicasets\nkubectl describe rs &lt;name&gt;\n\n# During rolling update — two RSes visible\nkubectl get rs -w  # old scaling down, new scaling up</pre></div>`,qa:['replicaset','deploy-vs-pod']},
+  statefulset:{i:'🏛️',t:'StatefulSet',b:'Workload',ov:`<div class="prose"><p>A <strong>StatefulSet</strong> is for stateful apps needing stable identities. Each pod gets a persistent name and its own PVC.</p><div class="kvg"><div class="kv"><div class="kvk">STABLE NAMES</div><div class="kvv">Pods: app-0, app-1, app-2 — never random hashes</div></div><div class="kv g"><div class="kvk">OWN PVC</div><div class="kvv">Each pod gets its own PVC — data persists on restart</div></div><div class="kv v"><div class="kvk">ORDERED</div><div class="kvv">Start: 0→1→2, Terminate: 2→1→0</div></div><div class="kv a"><div class="kvk">STABLE DNS</div><div class="kvv">app-0.svc.namespace.svc.cluster.local — predictable hostname</div></div><div class="kv r"><div class="kvk">USE FOR</div><div class="kvv">PostgreSQL, MySQL, Kafka, Zookeeper, Elasticsearch, Redis Cluster</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: postgres\nspec:\n  serviceName: "postgres"\n  replicas: 3\n  selector:\n    matchLabels:\n      app: postgres\n  template:\n    metadata:\n      labels:\n        app: postgres\n    spec:\n      containers:\n      - name: postgres\n        image: postgres:15\n        volumeMounts:\n        - name: data\n          mountPath: /var/lib/postgresql/data\n  volumeClaimTemplates:\n  - metadata:\n      name: data\n    spec:\n      resources:\n        requests:\n          storage: 10Gi</pre></div>`,qa:['statefulset-vs-deploy','pv-pvc']},
+  daemonset:{i:'👁️',t:'DaemonSet',b:'Workload',ov:`<div class="prose"><p>A <strong>DaemonSet</strong> ensures exactly one Pod runs on every node. When nodes join, pods are auto-added. When nodes leave, pods are removed.</p><div class="kvg"><div class="kv"><div class="kvk">ONE PER NODE</div><div class="kvv">Exactly one pod per node, always</div></div><div class="kv g"><div class="kvk">AUTO-SCALE</div><div class="kvv">Follows cluster node count automatically</div></div><div class="kv v"><div class="kvk">SYSTEM PODS</div><div class="kvv">kube-proxy and CNI plugins run as DaemonSets</div></div></div><h4>Common uses</h4><p>Fluentd/Filebeat (logs), Prometheus node-exporter, Datadog, Calico/Cilium (networking), security scanners.</p></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: apps/v1\nkind: DaemonSet\nmetadata:\n  name: log-collector\nspec:\n  selector:\n    matchLabels:\n      name: log-collector\n  template:\n    metadata:\n      labels:\n        name: log-collector\n    spec:\n      containers:\n      - name: fluentd\n        image: fluentd:v1.16\n        volumeMounts:\n        - name: varlog\n          mountPath: /var/log\n      volumes:\n      - name: varlog\n        hostPath:\n          path: /var/log</pre></div>`,qa:['daemonset']},
+  job:{i:'⚙️',t:'Job & CronJob',b:'Workload',ov:`<div class="prose"><p><strong>Jobs</strong> run pods to completion. <strong>CronJobs</strong> schedule Jobs on a time-based schedule.</p><div class="kvg"><div class="kv g"><div class="kvk">Job</div><div class="kvv">Runs until completion. Retries on failure. For DB migrations, batch jobs, reports.</div></div><div class="kv v"><div class="kvk">CronJob</div><div class="kvv">Creates Jobs on cron schedule. Nightly backups, hourly exports.</div></div><div class="kv a"><div class="kvk">completions</div><div class="kvv">How many pods must succeed</div></div><div class="kv"><div class="kvk">parallelism</div><div class="kvv">How many pods run simultaneously</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: batch/v1\nkind: CronJob\nmetadata:\n  name: db-backup\nspec:\n  schedule: "0 0 * * *"   # midnight every day\n  jobTemplate:\n    spec:\n      template:\n        spec:\n          containers:\n          - name: backup\n            image: postgres:15\n            command: ["/bin/sh","-c","pg_dump..."]\n          restartPolicy: OnFailure</pre></div>`,qa:['statefulset-vs-deploy']},
+  hpa:{i:'📈',t:'HPA (Horizontal Pod Autoscaler)',b:'Workload',ov:`<div class="prose"><p>HPA automatically scales pod replicas based on CPU/memory or custom metrics.</p><div class="kvg"><div class="kv"><div class="kvk">FLOW</div><div class="kvv">Metrics Server → HPA controller checks every 15s → scales up/down</div></div><div class="kv g"><div class="kvk">FORMULA</div><div class="kvv">desiredReplicas = ceil(current × currentMetric/targetMetric)</div></div><div class="kv v"><div class="kvk">REQUIRES</div><div class="kvv">Metrics Server installed in cluster</div></div><div class="kv a"><div class="kvk">CUSTOM</div><div class="kvv">Prometheus Adapter for queue depth, requests/sec metrics</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: my-app-hpa\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: Deployment\n    name: my-app\n  minReplicas: 2\n  maxReplicas: 10\n  metrics:\n  - type: Resource\n    resource:\n      name: cpu\n      target:\n        type: Utilization\n        averageUtilization: 70</pre></div>`,qa:['hpa-how','taints']},
+  clusterip:{i:'🔵',t:'ClusterIP Service',b:'Networking',ov:`<div class="prose"><p><strong>ClusterIP</strong> is the default Service type. Assigns a stable virtual IP only accessible from inside the cluster.</p><div class="kvg"><div class="kv v"><div class="kvk">RANGE</div><div class="kvv">Usually 10.96.0.0/12 — virtual IPs inside cluster only</div></div><div class="kv g"><div class="kvk">DNS</div><div class="kvv">my-svc.namespace.svc.cluster.local resolves to ClusterIP</div></div><div class="kv"><div class="kvk">USE CASE</div><div class="kvv">Backend→DB, Frontend→Backend API (internal communication)</div></div><div class="kv a"><div class="kvk">NOT EXTERNAL</div><div class="kvv">Cannot be reached from outside cluster without port-forward</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: Service\nmetadata:\n  name: my-backend\nspec:\n  type: ClusterIP   # default, can omit\n  selector:\n    app: backend\n  ports:\n  - port: 80\n    targetPort: 8080</pre></div>`,qa:['service-types']},
+  nodeport:{i:'🟡',t:'NodePort Service',b:'Networking',ov:`<div class="prose"><p><strong>NodePort</strong> exposes on a static port (30000-32767) on every node. External traffic reaches pods via <code>NodeIP:NodePort</code>.</p><div class="kvg"><div class="kv a"><div class="kvk">PORT RANGE</div><div class="kvv">30000–32767 (configurable)</div></div><div class="kv g"><div class="kvk">ACCESS</div><div class="kvv">http://NodeIP:30080 from outside cluster</div></div><div class="kv v"><div class="kvk">ALL NODES</div><div class="kvv">Port opens on ALL nodes even if pod isn't there</div></div><div class="kv"><div class="kvk">USE CASE</div><div class="kvv">Development, bare-metal. For production use LoadBalancer or Ingress.</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: Service\nspec:\n  type: NodePort\n  selector:\n    app: my-app\n  ports:\n  - port: 80\n    targetPort: 80\n    nodePort: 30080   # omit for random 30000-32767</pre></div>`,qa:['service-types']},
+  loadbalancer:{i:'⚖️',t:'LoadBalancer Service',b:'Networking',ov:`<div class="prose"><p><strong>LoadBalancer</strong> provisions a real cloud load balancer (AWS ELB, GCP LB, Azure LB) via Cloud Controller Manager.</p><div class="kvg"><div class="kv g"><div class="kvk">CLOUD ONLY</div><div class="kvv">AWS EKS, GCP GKE, Azure AKS. Bare-metal needs MetalLB.</div></div><div class="kv v"><div class="kvk">EXTERNAL IP</div><div class="kvv">Cloud provisions a real public IP/DNS — internet accessible</div></div><div class="kv a"><div class="kvk">COST</div><div class="kvv">One cloud LB per Service — gets expensive with many services</div></div><div class="kv r"><div class="kvk">BETTER WAY</div><div class="kvv">Use ONE LB + Ingress Controller to route to many services</div></div></div><h4>Traffic flow</h4><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">Internet → Cloud LB (AWS ELB)\n  → NodePort on healthy node\n  → kube-proxy → Pod</pre></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: Service\nmetadata:\n  name: my-app-lb\nspec:\n  type: LoadBalancer\n  selector:\n    app: my-app\n  ports:\n  - port: 80\n    targetPort: 80\n\n# After creation — wait for EXTERNAL-IP\nkubectl get svc my-app-lb --watch</pre></div>`,qa:['service-types','ingress-vs-lb']},
+  ingress:{i:'🚦',t:'Ingress',b:'Networking',ov:`<div class="prose"><p><strong>Ingress</strong> manages HTTP/HTTPS routing to services. One entry point, many services — path-based and host-based routing, TLS termination.</p><div class="kvg"><div class="kv v"><div class="kvk">REQUIRES</div><div class="kvv">Ingress Controller: nginx-ingress, Traefik, HAProxy, AWS ALB</div></div><div class="kv g"><div class="kvk">PATH ROUTING</div><div class="kvv">/api → api-service, /web → frontend-service</div></div><div class="kv"><div class="kvk">HOST ROUTING</div><div class="kvv">api.myapp.com → api-svc, app.myapp.com → frontend-svc</div></div><div class="kv a"><div class="kvk">TLS/SSL</div><div class="kvv">Terminates HTTPS at Ingress — pods serve plain HTTP</div></div><div class="kv r"><div class="kvk">vs LB</div><div class="kvv">ONE LB for ALL services vs one LB per service — much cheaper</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: my-ingress\n  annotations:\n    nginx.ingress.kubernetes.io/rewrite-target: /\nspec:\n  ingressClassName: nginx\n  tls:\n  - hosts: [myapp.com]\n    secretName: myapp-tls\n  rules:\n  - host: myapp.com\n    http:\n      paths:\n      - path: /api\n        pathType: Prefix\n        backend:\n          service:\n            name: api-service\n            port:\n              number: 80\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: frontend-service\n            port:\n              number: 80</pre></div>`,qa:['ingress-vs-lb','service-types']},
+  dns:{i:'📡',t:'CoreDNS',b:'Networking',ov:`<div class="prose"><p><strong>CoreDNS</strong> is the cluster DNS server. Runs as a Deployment in kube-system. Enables service discovery by name.</p><div class="kvg"><div class="kv v"><div class="kvk">DNS FORMAT</div><div class="kvv">service.namespace.svc.cluster.local</div></div><div class="kv g"><div class="kvk">SHORT FORM</div><div class="kvv">Same namespace: just service-name</div></div><div class="kv a"><div class="kvk">CONFIGURED</div><div class="kvv">Every pod auto-gets CoreDNS via /etc/resolv.conf</div></div></div><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">curl http://my-svc          # same namespace\ncurl http://my-svc.prod     # cross-namespace\ncurl http://my-svc.prod.svc.cluster.local</pre></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre>kubectl get pods -n kube-system | grep coredns\nkubectl get configmap coredns -n kube-system -o yaml\n\n# Test DNS from inside a pod\nkubectl run dns-test --image=busybox -it --rm -- nslookup kubernetes</pre></div>`,qa:['service-types','namespace']},
+  networkpolicy:{i:'🔥',t:'NetworkPolicy',b:'Networking',ov:`<div class="prose"><p>A <strong>NetworkPolicy</strong> is a pod-level firewall. By default all pods can talk to all pods. NetworkPolicies restrict ingress/egress by labels, namespaces, and ports.</p><div class="kvg"><div class="kv r"><div class="kvk">DEFAULT</div><div class="kvv">No NetworkPolicy = all traffic allowed</div></div><div class="kv g"><div class="kvk">SELECTOR</div><div class="kvv">Applies to pods matching podSelector labels</div></div><div class="kv v"><div class="kvk">REQUIRES CNI</div><div class="kvv">Calico, Cilium, Weave support it. Flannel does NOT.</div></div></div><h4>Common pattern: deny-all then allow specific</h4></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: networking.k8s.io/v1\nkind: NetworkPolicy\nmetadata:\n  name: allow-frontend-to-backend\nspec:\n  podSelector:\n    matchLabels:\n      app: backend\n  policyTypes:\n  - Ingress\n  ingress:\n  - from:\n    - podSelector:\n        matchLabels:\n          app: frontend\n    ports:\n    - port: 8080</pre></div>`,qa:['network-policy']},
+  configmap:{i:'⚙️',t:'ConfigMap',b:'Config & Storage',ov:`<div class="prose"><p>A <strong>ConfigMap</strong> stores non-confidential config as key-value pairs. Decouples config from image — change config without rebuilding.</p><div class="kvg"><div class="kv a"><div class="kvk">ENV VARS</div><div class="kvv">Inject entire ConfigMap or specific keys as environment variables</div></div><div class="kv g"><div class="kvk">VOLUMES</div><div class="kvv">Mount as files — each key becomes a file in the container</div></div><div class="kv v"><div class="kvk">SIZE LIMIT</div><div class="kvv">1MB max per ConfigMap</div></div><div class="kv r"><div class="kvk">NOT FOR SECRETS</div><div class="kvv">Not encrypted. Never store passwords in ConfigMaps.</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: app-config\ndata:\n  DB_HOST: "postgres-service"\n  APP_ENV: "production"\n  config.yaml: |\n    server:\n      port: 8080\n\n---\n# Use in Pod\nspec:\n  containers:\n  - name: app\n    envFrom:\n    - configMapRef:\n        name: app-config</pre></div>`,qa:['configmap-secret']},
+  secret:{i:'🔐',t:'Secret',b:'Config & Storage',ov:`<div class="prose"><p><strong>Secrets</strong> store sensitive data (passwords, API tokens, TLS certs). Base64-encoded in etcd — NOT encrypted by default (enable etcd encryption at rest for production).</p><div class="kvg"><div class="kv r"><div class="kvk">TYPES</div><div class="kvv">Opaque (generic), kubernetes.io/tls, kubernetes.io/dockerconfigjson</div></div><div class="kv g"><div class="kvk">RBAC</div><div class="kvv">Access controlled — restrict which pods/users can read</div></div><div class="kv a"><div class="kvk">PRODUCTION</div><div class="kvv">Use HashiCorp Vault or AWS Secrets Manager for real secret management</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre># Create from CLI (safer than YAML)\nkubectl create secret generic db-secret \\\n  --from-literal=DB_PASSWORD=mypass123 \\\n  --from-literal=DB_USER=admin\n\n# Use in Pod\nspec:\n  containers:\n  - name: app\n    envFrom:\n    - secretRef:\n        name: db-secret</pre></div>`,qa:['configmap-secret']},
+  pv:{i:'💽',t:'PersistentVolume',b:'Storage',ov:`<div class="prose"><p>A <strong>PV</strong> is a piece of cluster storage provisioned by admin or dynamically by StorageClass. Independent of pod lifecycle.</p><div class="kvg"><div class="kv a"><div class="kvk">LIFECYCLE</div><div class="kvv">Survives pod restarts and deletions</div></div><div class="kv g"><div class="kvk">ACCESS MODES</div><div class="kvv">ReadWriteOnce (1 node), ReadOnlyMany (many), ReadWriteMany (many)</div></div><div class="kv v"><div class="kvk">RECLAIM</div><div class="kvv">Retain (keep data), Delete (delete data)</div></div><div class="kv"><div class="kvk">BACKENDS</div><div class="kvv">AWS EBS, GCP PD, Azure Disk, NFS, Local, Ceph</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: PersistentVolume\nmetadata:\n  name: my-pv\nspec:\n  capacity:\n    storage: 10Gi\n  accessModes:\n    - ReadWriteOnce\n  persistentVolumeReclaimPolicy: Retain\n  storageClassName: standard\n  hostPath:\n    path: /data/my-pv   # dev only</pre></div>`,qa:['pv-pvc','statefulset-vs-deploy']},
+  pvc:{i:'📋',t:'PersistentVolumeClaim',b:'Storage',ov:`<div class="prose"><p>A <strong>PVC</strong> is a pod's request for storage. K8s binds PVC to a matching PV (or creates one via StorageClass).</p><div class="kvg"><div class="kv a"><div class="kvk">BINDING</div><div class="kvv">K8s finds PV that satisfies PVC (size, access mode, storageClass)</div></div><div class="kv g"><div class="kvk">DYNAMIC</div><div class="kvv">StorageClass auto-creates PVs on demand — no manual creation</div></div><div class="kv v"><div class="kvk">LIFECYCLE</div><div class="kvv">PVC survives pod deletion — data preserved until PVC deleted</div></div></div><pre style="font-family:'Fira Code',monospace;font-size:11px;background:var(--bg);padding:10px;border-radius:7px;color:#7dd3fc;line-height:1.8">Pod → PVC (need 5Gi RWO)\n  → StorageClass → creates PV (AWS EBS)\n  → bound → pod mounts /data</pre></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: my-pvc\nspec:\n  accessModes:\n    - ReadWriteOnce\n  storageClassName: gp2   # AWS\n  resources:\n    requests:\n      storage: 5Gi\n\n---\nspec:\n  volumes:\n  - name: data\n    persistentVolumeClaim:\n      claimName: my-pvc\n  containers:\n  - name: app\n    volumeMounts:\n    - mountPath: /data\n      name: data</pre></div>`,qa:['pv-pvc','statefulset-vs-deploy']},
+  storageclass:{i:'🗂️',t:'StorageClass',b:'Storage',ov:`<div class="prose"><p>A <strong>StorageClass</strong> enables dynamic provisioning — when a PVC is created, K8s automatically creates a PV using the StorageClass provisioner.</p><div class="kvg"><div class="kv a"><div class="kvk">AWS</div><div class="kvv">gp2, gp3 (EBS), efs-sc (EFS)</div></div><div class="kv g"><div class="kvk">GCP</div><div class="kvv">standard (PD HDD), premium-rwo (PD SSD)</div></div><div class="kv v"><div class="kvk">Azure</div><div class="kvv">managed (HDD), managed-premium (SSD)</div></div><div class="kv"><div class="kvk">Local</div><div class="kvv">local-path (Rancher) for dev/test on bare-metal</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: storage.k8s.io/v1\nkind: StorageClass\nmetadata:\n  name: fast-ssd\nprovisioner: ebs.csi.aws.com\nparameters:\n  type: gp3\n  encrypted: "true"\nreclaimPolicy: Retain\nvolumeBindingMode: WaitForFirstConsumer</pre></div>`,qa:['pv-pvc']},
+  namespace:{i:'📁',t:'Namespace',b:'Organization',ov:`<div class="prose"><p>A <strong>Namespace</strong> provides isolation within a cluster. Resource names need only be unique within a namespace.</p><div class="kvg"><div class="kv a"><div class="kvk">DEFAULT NS</div><div class="kvv">"default" — where resources go without -n flag</div></div><div class="kv g"><div class="kvk">SYSTEM NS</div><div class="kvv">kube-system, kube-public, kube-node-lease</div></div><div class="kv v"><div class="kvk">SCOPED</div><div class="kvv">RBAC, NetworkPolicy, ResourceQuota are per-namespace</div></div><div class="kv r"><div class="kvk">NOT SCOPED</div><div class="kvv">Nodes, PVs, StorageClasses, ClusterRoles are cluster-wide</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">BASH</span><button class="cbc" onclick="cc(this)">copy</button><pre>kubectl create namespace production\nkubectl apply -f deployment.yaml -n production\nkubectl get pods -n production\nkubectl get pods -A           # all namespaces\n\n# Set default namespace for context\nkubectl config set-context --current --namespace=production</pre></div>`,qa:['namespace']},
+  rbac:{i:'🔒',t:'RBAC',b:'Security',ov:`<div class="prose"><p><strong>RBAC</strong> (Role-Based Access Control) regulates access to K8s resources based on user roles.</p><div class="kvg"><div class="kv r"><div class="kvk">Role</div><div class="kvv">Namespace-scoped permissions</div></div><div class="kv v"><div class="kvk">ClusterRole</div><div class="kvv">Cluster-wide or cross-namespace permissions</div></div><div class="kv g"><div class="kvk">RoleBinding</div><div class="kvv">Binds Role to user/group/SA in a namespace</div></div><div class="kv a"><div class="kvk">ClusterRoleBinding</div><div class="kvv">Binds ClusterRole cluster-wide</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre">apiVersion: rbac.authorization.k8s.io/v1\nkind: Role\nmetadata:\n  namespace: production\n  name: pod-reader\nrules:\n- apiGroups: [""]\n  resources: ["pods"]\n  verbs: ["get","list","watch"]\n\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: RoleBinding\nmetadata:\n  name: read-pods\n  namespace: production\nsubjects:\n- kind: User\n  name: jane\nroleRef:\n  kind: Role\n  name: pod-reader\n  apiGroup: rbac.authorization.k8s.io</pre></div>`,qa:['rbac-what']},
+  serviceaccount:{i:'🪪',t:'ServiceAccount',b:'Security',ov:`<div class="prose"><p>A <strong>ServiceAccount</strong> is a pod's identity when talking to the API Server.</p><div class="kvg"><div class="kv"><div class="kvk">DEFAULT</div><div class="kvv">Every namespace has a "default" SA with minimal permissions</div></div><div class="kv g"><div class="kvk">TOKEN</div><div class="kvv">K8s auto-mounts SA token in pod at /var/run/secrets/kubernetes.io/serviceaccount/</div></div><div class="kv a"><div class="kvk">BEST PRACTICE</div><div class="kvv">Create dedicated SAs per app, bind only needed RBAC rules</div></div><div class="kv r"><div class="kvk">AVOID</div><div class="kvv">Never use default SA for apps that need API access — too risky</div></div></div></div>`,ym:`<div class="cb"><span class="cbl">YAML</span><button class="cbc" onclick="cc(this)">copy</button><pre>apiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: my-app-sa\n  namespace: production\n\n---\n# Use in Deployment\nspec:\n  serviceAccountName: my-app-sa</pre></div>`,qa:['sa-what','rbac-what']},
+};
+
+const TOPICS_DATA=[
+  {id:'architecture',i:'🏗️',n:'01',nm:'Kubernetes Architecture',ds:'Control Plane, Worker Nodes, etcd, API Server, Scheduler and all components.',tg:['Beginner','Diagrams'],cs:['apiserver','etcd','scheduler','controller','kubelet','kubeproxy'],qs:['what-is-k8s','etcd-what','etcd-down']},
+  {id:'pods',i:'📦',n:'02',nm:'Pods & Containers',ds:'Lifecycle, multi-container pods, init containers, sidecars, probes, error states.',tg:['Beginner','YAML'],cs:['pod','sidecar'],qs:['pod-vs-container','probes','crashloop','resource-limits']},
+  {id:'workloads',i:'🚀',n:'03',nm:'Workloads',ds:'Deployments, ReplicaSets, StatefulSets, DaemonSets, Jobs and CronJobs.',tg:['Beginner','Hands-on'],cs:['deployment','replicaset','statefulset','daemonset','job','hpa'],qs:['deploy-vs-pod','replicaset','rolling-update','statefulset-vs-deploy','daemonset']},
+  {id:'networking',i:'🌐',n:'04',nm:'Services & Networking',ds:'ClusterIP, NodePort, LoadBalancer, Ingress, CoreDNS, NetworkPolicy, kube-proxy.',tg:['Intermediate','Networking'],cs:['clusterip','nodeport','loadbalancer','ingress','dns','networkpolicy','kubeproxy'],qs:['service-types','ingress-vs-lb','coredns','network-policy']},
+  {id:'config',i:'🔐',n:'05',nm:'ConfigMaps & Secrets',ds:'Injecting configuration and sensitive data into pods without hardcoding.',tg:['Intermediate','Security'],cs:['configmap','secret'],qs:['configmap-secret']},
+  {id:'storage',i:'💾',n:'06',nm:'Storage & Volumes',ds:'PersistentVolumes, PVCs, StorageClasses and when to use StatefulSet vs Deployment.',tg:['Intermediate','Storage'],cs:['pv','pvc','storageclass','statefulset'],qs:['pv-pvc','statefulset-vs-deploy']},
+  {id:'scheduling',i:'📅',n:'07',nm:'Scheduling & Scaling',ds:'HPA, node affinity, taints & tolerations, resource requests and limits.',tg:['Advanced','Scaling'],cs:['scheduler','hpa'],qs:['taints','hpa-how','resource-limits']},
+  {id:'security',i:'🔒',n:'08',nm:'Security & RBAC',ds:'RBAC, Namespaces, ServiceAccounts, NetworkPolicies, Secrets management.',tg:['Advanced','Security'],cs:['rbac','serviceaccount','namespace','secret','networkpolicy'],qs:['rbac-what','sa-what','namespace','network-policy']},
+];
+
+const LABS_DATA=[
+  {n:'01',t:'Run your first Pod',d:'easy',g:'Start an nginx pod, check STATUS=Running, describe it, then delete it.',steps:[{l:'Run a pod',c:'kubectl run my-nginx --image=nginx'},{l:'Check STATUS = Running',c:'kubectl get pods'},{l:'Full details + Events',c:'kubectl describe pod my-nginx'},{l:'Clean up',c:'kubectl delete pod my-nginx'}],cks:['Pod ran','Described it','Deleted it']},
+  {n:'02',t:'Deploy with self-healing',d:'easy',g:'Create a 3-replica Deployment, delete one pod, watch K8s recreate it immediately.',steps:[{l:'Create deployment',c:'kubectl create deployment my-app --image=nginx --replicas=3'},{l:'List pods',c:'kubectl get pods -o wide'},{l:'Delete one pod',c:'kubectl delete pod <pod-name>'},{l:'Watch self-healing',c:'kubectl get pods -w'}],cks:['Deployment created','3 pods running','Self-heal observed']},
+  {n:'03',t:'Expose with a Service',d:'easy',g:'Create a Service and access nginx at localhost:8080 via port-forward.',steps:[{l:'Expose deployment',c:'kubectl expose deployment my-app --port=80 --type=NodePort'},{l:'Check service',c:'kubectl get services'},{l:'Port-forward (open localhost:8080)',c:'kubectl port-forward svc/my-app 8080:80'},{l:'Clean up',c:'kubectl delete svc my-app'}],cks:['Service created','Nginx page visible','Port-forward stopped']},
+  {n:'04',t:'Scale & Rolling Update',d:'medium',g:'Scale to 5 replicas, update image version, watch rolling update, then rollback.',steps:[{l:'Scale to 5',c:'kubectl scale deployment my-app --replicas=5'},{l:'Watch pods scale',c:'kubectl get pods -w'},{l:'Trigger rolling update',c:'kubectl set image deployment/my-app nginx=nginx:1.25'},{l:'Watch rollout',c:'kubectl rollout status deployment/my-app'},{l:'Rollback',c:'kubectl rollout undo deployment/my-app'}],cks:['Scaled to 5','Image updated','Rolled back']},
+  {n:'05',t:'Debug a Broken Pod',d:'medium',g:'Create a pod with bad image, diagnose ImagePullBackOff, fix it.',steps:[{l:'Create broken pod',c:'kubectl run broken --image=nginxxx'},{l:'See error status',c:'kubectl get pods'},{l:'Read Events',c:'kubectl describe pod broken'},{l:'Check events',c:'kubectl get events --sort-by=.lastTimestamp'},{l:'Fix it',c:'kubectl delete pod broken && kubectl run broken --image=nginx'}],cks:['Saw ImagePullBackOff','Found error in Events','Fixed the pod']},
+];
+
+// ── RENDER ─────────────────────────────────────────────────────────────────
+
+function rQAMini(qid){const q=QA.find(x=>x.id===qid);if(!q)return '';return `<div class="qam" onclick="this.classList.toggle('open')"><div class="qam-q"><span class="qam-qt">${q.q}</span><span class="qam-d d${q.d[0]}">${q.d}</span><span class="qam-ch">▼</span></div><div class="qam-a">${q.a}</div></div>`;}
+
+function renderTopics(){
+  document.getElementById('tgrid').innerHTML=TOPICS_DATA.map(t=>`
+    <div class="tcard" onclick="openTopic('${t.id}',event)">
+      <div class="tc-ic">${t.i}</div><div class="tc-no">TOPIC ${t.n}</div>
+      <div class="tc-nm">${t.nm}</div><div class="tc-ds">${t.ds}</div>
+      <div class="tc-tg">${t.tg.map((tg,i)=>`<span class="ttg ${i===0?'e':''}">${tg}</span>`).join('')}</div>
+    </div>
+    <div class="tdw" id="tdw-${t.id}">
+      <div class="dh" style="background:var(--bg4)"><span class="di">${t.i}</span><span class="dt">${t.nm}</span><button class="dcl" onclick="closeTopic('${t.id}',event)">✕</button></div>
+      <div class="dbody">
+        <div class="dtabs">
+          <button class="dtab active" onclick="swTT(this,'${t.id}','cs')">Components</button>
+          <button class="dtab" onclick="swTT(this,'${t.id}','qa')">Interview Q&amp;A</button>
+        </div>
+        <div class="tc active" id="ttc-cs-${t.id}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:8px;margin-bottom:1rem">
+            ${t.cs.map(cid=>{const c=COMPONENTS[cid];return c?`<div style="background:var(--bg4);border:1px solid var(--b);border-radius:8px;padding:10px;cursor:pointer;transition:all .2s" onclick="gS('arch');setTimeout(()=>SD('${cid}'),120)" onmouseover="this.style.borderColor='var(--cy)'" onmouseout="this.style.borderColor='var(--b)'"><div style="font-size:1.1rem;margin-bottom:4px">${c.i}</div><div style="font-size:11px;font-weight:700;color:var(--tx)">${c.t}</div><div style="font-size:10px;color:var(--m2);margin-top:2px">${c.b}</div></div>`:''}).join('')}
+          </div>
+        </div>
+        <div class="tc" id="ttc-qa-${t.id}">${t.qs.map(rQAMini).join('')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function openTopic(id,e){e&&e.stopPropagation();const d=document.getElementById('tdw-'+id);const was=d.classList.contains('open');document.querySelectorAll('.tdw').forEach(x=>x.classList.remove('open'));if(!was){d.classList.add('open');setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}}
+function closeTopic(id,e){e&&e.stopPropagation();document.getElementById('tdw-'+id).classList.remove('open');}
+function swTT(btn,tid,tab){const body=document.getElementById('tdw-'+tid).querySelector('.dbody');body.querySelectorAll('.dtab').forEach(b=>b.classList.remove('active'));body.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('ttc-'+tab+'-'+tid).classList.add('active');}
+
+function renderQA(){
+  document.getElementById('qa-list').innerHTML=QA.map(q=>`
+    <div class="qarow" data-d="${q.d}" data-c="${q.c}" onclick="this.classList.toggle('open')">
+      <div class="qarow-q">
+        <span class="qarow-qt">${q.q}</span>
+        <span class="qarow-c" style="color:${q.d==='easy'?'var(--gn)':q.d==='medium'?'var(--am)':'var(--rd)'};border-color:${q.d==='easy'?'rgba(0,255,163,.3)':q.d==='medium'?'rgba(255,184,0,.3)':'rgba(255,77,106,.3)'}">${q.d}</span>
+        <span class="qarow-c">${q.c}</span>
+        <span style="color:var(--mu);font-size:10px;flex-shrink:0">▼</span>
+      </div>
+      <div class="qarow-a">${q.a}</div>
+    </div>`).join('');
+}
+function fQA(f,btn){document.querySelectorAll('.qf').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.qarow').forEach(el=>{el.style.display=(f==='all'||el.dataset.d===f||el.dataset.c===f)?'block':'none';});}
+
+function renderLabs(){
+  document.getElementById('labs-list').innerHTML=LABS_DATA.map(lab=>`
+    <div class="lcard">
+      <div class="lhd"><div class="lno">${lab.n}</div><div class="ltit">${lab.t}</div><span class="ttg ${lab.d==='easy'?'e':'m'}" style="margin-left:auto">${lab.d}</span></div>
+      <div class="lgoal">${lab.g}</div>
+      ${lab.steps.map((s,i)=>`<div class="lstep"><div class="ldot">${i+1}</div><div style="flex:1"><div style="font-size:11px;color:var(--m2);margin-bottom:3px">${s.l}</div><div class="lcmd" onclick="cpCmd(this)"><span>${s.c}</span><span style="font-size:10px;color:var(--mu);flex-shrink:0">copy</span></div></div></div>`).join('')}
+      <div class="lchecks">${lab.cks.map(c=>`<div class="chk" onclick="tChk(this)"><span>◯</span>${c}</div>`).join('')}</div>
+    </div>`).join('');
+}
+function cpCmd(el){const t=el.querySelector('span').textContent;navigator.clipboard.writeText(t).catch(()=>{});const l=el.querySelector('span:last-child');l.textContent='copied!';l.style.color='var(--gn)';setTimeout(()=>{l.textContent='copy';l.style.color=''},1400);}
+function tChk(el){el.classList.toggle('done');el.querySelector('span').textContent=el.classList.contains('done')?'✓':'◯';updP();}
+function updP(){const total=document.querySelectorAll('.chk').length,done=document.querySelectorAll('.chk.done').length,pct=total?Math.round(done/total*100):0;document.getElementById('pfl').style.width=pct+'%';document.getElementById('plbl').textContent=done+' / '+total+' tasks';document.getElementById('ppc').textContent=pct+'%';}
+
+// ── ARCH DRAWER ───────────────────────────────────────────────────────────────
+function SD(id){
+  const c=COMPONENTS[id];if(!c)return;
+  document.getElementById('dd-i').textContent=c.i;
+  document.getElementById('dd-t').textContent=c.t;
+  document.getElementById('dd-b').textContent=c.b;
+  document.getElementById('tc-ov').innerHTML=c.ov;
+  document.getElementById('tc-ym').innerHTML=c.ym;
+  document.getElementById('tc-qa').innerHTML=(c.qa||[]).map(rQAMini).join('')||'<p style="color:var(--mu);font-size:12px">No Q&A linked yet.</p>';
+  document.querySelectorAll('#arch-drawer .dtab').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#arch-drawer .tc').forEach((t,i)=>t.classList.toggle('active',i===0));
+  const dr=document.getElementById('arch-drawer');dr.classList.add('open');
+  setTimeout(()=>dr.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+function closeD(){document.getElementById('arch-drawer').classList.remove('open');}
+function swT(btn,tab){document.querySelectorAll('#arch-drawer .dtab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('#arch-drawer .tc').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('tc-'+tab).classList.add('active');}
+function cc(btn){const pre=btn.parentElement.querySelector('pre');navigator.clipboard.writeText(pre.textContent).catch(()=>{});btn.textContent='✓';btn.style.color='var(--gn)';setTimeout(()=>{btn.textContent='copy';btn.style.color=''},1500);}
+
+// ── NAV ──────────────────────────────────────────────────────────────────────
+const SECS=['home','arch','topics','interview','practice','usecases','cheatsheet'];
+
+const UC_DATA=[
+  {
+    emoji:'🌐',title:'Deploy a Web App with Zero Downtime',
+    desc:'Deploy a Node.js API with rolling updates so users never see downtime during releases.',
+    badges:[{t:'Deployment',c:'cy'},{t:'Service',c:'gn'},{t:'Ingress',c:'am'},{t:'HPA',c:'vt'}],
+    arch:'Internet → Ingress (nginx) → Service (ClusterIP)\n  → Deployment (3 replicas) → Pods (node:app)\n  HPA watches CPU → scales 3→10 under load',
+    steps:[
+      {s:'Create a <strong>Deployment</strong> with 3 replicas and <code>RollingUpdate</code> strategy (<code>maxUnavailable: 0</code>)'},
+      {s:'Create a <strong>ClusterIP Service</strong> pointing to the deployment pods via label selector'},
+      {s:'Set up an <strong>Ingress</strong> with nginx controller to route <code>api.myapp.com → service</code> with TLS'},
+      {s:'Attach a <strong>HPA</strong> targeting 70% CPU — auto-scales from 3 to 10 pods under load'},
+      {s:'Deploy new version: <code>kubectl set image deployment/api app=node:v2</code> — pods roll one-by-one with zero downtime'},
+    ],
+    tip:'Why zero downtime? With <code>maxUnavailable: 0</code> and <code>maxSurge: 1</code>, K8s always keeps 3 healthy pods while adding the new one first.'
+  },
+  {
+    emoji:'🗄️',title:'Run a Production Database (PostgreSQL)',
+    desc:'Run PostgreSQL in Kubernetes with persistent storage, stable identity, and credentials managed as Secrets.',
+    badges:[{t:'StatefulSet',c:'cy'},{t:'PVC',c:'gn'},{t:'Secret',c:'am'},{t:'Service',c:'vt'}],
+    arch:'App Pods → ClusterIP Service (postgres:5432)\n  → StatefulSet (postgres-0, postgres-1)\n  → PVC per pod (10Gi EBS) → PersistentVolume\n  Secret: DB_PASSWORD injected as env var',
+    steps:[
+      {s:'Create a <strong>Secret</strong> with <code>POSTGRES_PASSWORD</code> — never hardcode credentials in YAML'},
+      {s:'Create a <strong>Headless Service</strong> (<code>clusterIP: None</code>) so each pod gets its own DNS: <code>postgres-0.postgres.default.svc.cluster.local</code>'},
+      {s:'Create a <strong>StatefulSet</strong> with 2 replicas and <code>volumeClaimTemplates</code> — each pod gets its own 10Gi PVC automatically'},
+      {s:'App connects to <code>postgres-0.postgres</code> (primary) for writes, <code>postgres-1.postgres</code> for reads'},
+      {s:'If postgres-0 pod dies, K8s recreates it with the <strong>same name and same PVC</strong> — data intact'},
+    ],
+    tip:'Why StatefulSet and not Deployment? Databases need stable hostnames and dedicated storage. A Deployment gives pods random names and shared volumes — wrong for databases.'
+  },
+  {
+    emoji:'📊',title:'Multi-Team Cluster with Namespaces & RBAC',
+    desc:'One cluster shared by 3 teams (frontend, backend, data) with strict isolation using namespaces, RBAC, and resource quotas.',
+    badges:[{t:'Namespace',c:'cy'},{t:'RBAC',c:'am'},{t:'ResourceQuota',c:'gn'},{t:'NetworkPolicy',c:'vt'}],
+    arch:'Cluster\n  ├── ns: frontend  (team-a, quota: 4CPU/8Gi)\n  ├── ns: backend   (team-b, quota: 8CPU/16Gi)\n  └── ns: data      (team-c, quota: 16CPU/32Gi)\nEach ns: Role → RoleBinding → ServiceAccount',
+    steps:[
+      {s:'Create <strong>3 Namespaces</strong>: <code>frontend</code>, <code>backend</code>, <code>data</code>'},
+      {s:'Apply a <strong>ResourceQuota</strong> per namespace — limits total CPU/memory teams can consume'},
+      {s:'Create <strong>Roles</strong> per namespace: frontend team can only get/list/watch pods in their namespace'},
+      {s:'Create <strong>RoleBindings</strong> linking each team\'s users to their Role via ServiceAccounts'},
+      {s:'Add <strong>NetworkPolicy</strong> — frontend can only call backend on port 8080, backend can only call data on port 5432'},
+    ],
+    tip:'This is the most common enterprise K8s pattern. Teams are isolated but share the same control plane and worker nodes, reducing infrastructure cost.'
+  },
+  {
+    emoji:'📦',title:'Microservices with Service Discovery',
+    desc:'3 microservices (frontend, backend-api, database) that find each other by name using CoreDNS — no hardcoded IPs.',
+    badges:[{t:'Services',c:'cy'},{t:'CoreDNS',c:'gn'},{t:'ConfigMap',c:'am'},{t:'Ingress',c:'vt'}],
+    arch:'User → Ingress → frontend-svc\n  → frontend pods → http://backend-api-svc/api\n  → backend pods → postgres://db-svc:5432\n  All resolved by CoreDNS automatically',
+    steps:[
+      {s:'Deploy <strong>frontend</strong> Deployment + ClusterIP Service. Store <code>BACKEND_URL=http://backend-api-svc</code> in a <strong>ConfigMap</strong>'},
+      {s:'Deploy <strong>backend-api</strong> Deployment + ClusterIP Service. Inject DB creds from <strong>Secret</strong>'},
+      {s:'Deploy <strong>PostgreSQL</strong> as StatefulSet + Headless Service named <code>db-svc</code>'},
+      {s:'<strong>CoreDNS</strong> resolves <code>backend-api-svc</code> → ClusterIP → backend pods automatically'},
+      {s:'Expose only frontend via <strong>Ingress</strong> — backend and DB are never exposed to internet (ClusterIP only)'},
+    ],
+    tip:'Service discovery by name is one of K8s\'s most powerful features. No service mesh needed for basic inter-service communication — CoreDNS handles it out of the box.'
+  },
+  {
+    emoji:'🔄',title:'CI/CD Pipeline with Rolling Deployments',
+    desc:'GitHub Actions or Jenkins deploys new app versions to K8s automatically on every merge to main.',
+    badges:[{t:'Deployment',c:'cy'},{t:'kubectl',c:'gn'},{t:'Secret',c:'am'},{t:'Namespaces',c:'vt'}],
+    arch:'GitHub push → CI/CD (GitHub Actions)\n  → docker build + push to registry\n  → kubectl set image deployment/app ...\n  → K8s rolling update (zero downtime)',
+    steps:[
+      {s:'Store registry credentials as a <strong>Secret</strong> (<code>imagePullSecret</code>) so K8s can pull private images'},
+      {s:'Create <code>staging</code> and <code>production</code> <strong>Namespaces</strong> — CI deploys to staging on PR, production on merge'},
+      {s:'CI/CD pipeline runs: <code>docker build → docker push → kubectl set image</code>'},
+      {s:'K8s performs <strong>rolling update</strong> — no manual intervention, zero downtime'},
+      {s:'If new version fails health checks, <strong>rollback</strong>: <code>kubectl rollout undo deployment/app -n production</code>'},
+    ],
+    tip:'The Deployment rollout history (<code>kubectl rollout history</code>) keeps the last 10 revisions. One command rollback in production takes under 30 seconds.'
+  },
+  {
+    emoji:'📈',title:'Auto-Scaling Under Traffic Spikes',
+    desc:'App handles Black Friday traffic spikes automatically — pods scale from 2 to 50 without manual intervention.',
+    badges:[{t:'HPA',c:'cy'},{t:'Metrics Server',c:'gn'},{t:'Deployment',c:'am'},{t:'LoadBalancer',c:'vt'}],
+    arch:'Traffic spike → Cloud LB → Service\n  → Deployment (current: 2 pods, CPU: 85%)\n  → Metrics Server detects → HPA triggers\n  → Deployment scales to 20 pods in ~60s',
+    steps:[
+      {s:'Install <strong>Metrics Server</strong> in the cluster — HPA needs this to read CPU/memory usage'},
+      {s:'Set resource <strong>requests</strong> on pods (required for HPA): <code>cpu: 250m, memory: 256Mi</code>'},
+      {s:'Create <strong>HPA</strong>: <code>minReplicas: 2, maxReplicas: 50, targetCPU: 60%</code>'},
+      {s:'Traffic spike → CPU exceeds 60% → HPA scales up pods every 15 seconds until CPU normalizes'},
+      {s:'Traffic drops → HPA waits 5 minutes (stabilization window) → scales back down to save cost'},
+    ],
+    tip:'The stabilization window prevents "flapping" — rapid scale-up/down cycles. Set <code>scaleDown.stabilizationWindowSeconds: 300</code> to wait 5 min before scaling down.'
+  },
+  {
+    emoji:'🔐',title:'Secure Secrets Management',
+    desc:'App reads database passwords, API keys, and TLS certs securely — no secrets ever in code or ConfigMaps.',
+    badges:[{t:'Secret',c:'cy'},{t:'RBAC',c:'am'},{t:'ServiceAccount',c:'gn'},{t:'TLS Ingress',c:'vt'}],
+    arch:'App Pod (ServiceAccount: app-sa)\n  → Mounts Secret as env var (DB_PASSWORD)\n  → RBAC: app-sa can only read its own secret\n  → Ingress: TLS termination via cert stored in Secret\n  → etcd encryption at rest (production)',
+    steps:[
+      {s:'Create a dedicated <strong>ServiceAccount</strong> for the app — never use the default SA'},
+      {s:'Create a <strong>Role</strong> allowing only <code>get</code> on the specific secret — not list, not other secrets'},
+      {s:'Store <code>DB_PASSWORD</code> as a <strong>Secret</strong> and inject via <code>envFrom.secretRef</code> — never in ConfigMap'},
+      {s:'Store TLS cert as <strong>Secret</strong> type <code>kubernetes.io/tls</code> and reference in Ingress for HTTPS'},
+      {s:'In production: enable <strong>etcd encryption at rest</strong> and use external Vault for secret rotation'},
+    ],
+    tip:'The most common mistake: storing passwords in ConfigMaps because Secrets "are just base64 anyway". The real value of Secrets is RBAC isolation — only specific ServiceAccounts can read them.'
+  },
+  {
+    emoji:'🛠️',title:'Node-level Monitoring with DaemonSet',
+    desc:'Deploy Prometheus node-exporter on every node to collect system metrics — automatically follows cluster growth.',
+    badges:[{t:'DaemonSet',c:'cy'},{t:'Service',c:'gn'},{t:'ConfigMap',c:'am'},{t:'Namespace',c:'vt'}],
+    arch:'Every node → DaemonSet pod (node-exporter)\n  → exposes /metrics on port 9100\n  → Prometheus scrapes all pods via Service\n  → Grafana dashboards show cluster health',
+    steps:[
+      {s:'Create <code>monitoring</code> <strong>Namespace</strong> to isolate all observability tools'},
+      {s:'Deploy <strong>DaemonSet</strong> for <code>prometheus/node-exporter</code> — it automatically runs on every node including future ones'},
+      {s:'Mount <code>hostPath</code> volumes: <code>/proc</code>, <code>/sys</code>, <code>/</code> so exporter can read host metrics'},
+      {s:'Create a <strong>Service</strong> targeting DaemonSet pods — Prometheus uses this endpoint list to scrape all nodes'},
+      {s:'Deploy <strong>Prometheus</strong> + <strong>Grafana</strong> as Deployments in the monitoring namespace with RBAC to read pod metrics'},
+    ],
+    tip:'DaemonSet is the only correct choice here — you need exactly one agent per node. A Deployment with 5 replicas would put 5 agents on random nodes, missing many and doubling up on others.'
+  },
+];
+
+function renderUseCases(){
+  document.getElementById('uc-grid').innerHTML=UC_DATA.map((uc,idx)=>`
+    <div class="uc-card" id="uc-${idx}">
+      <div class="uc-top" onclick="toggleUC(${idx})">
+        <div class="uc-emoji">${uc.emoji}</div>
+        <div class="uc-meta">
+          <div class="uc-title">${uc.title}</div>
+          <div class="uc-desc">${uc.desc}</div>
+          <div class="uc-badges">${uc.badges.map(b=>`<span class="uc-badge ${b.c}">${b.t}</span>`).join('')}</div>
+        </div>
+        <span class="uc-chevron">▼</span>
+      </div>
+      <div class="uc-body">
+        <p style="font-size:11px;color:var(--mu);font-family:'Fira Code',monospace;margin-bottom:6px;letter-spacing:.06em">ARCHITECTURE</p>
+        <div class="uc-arch">${uc.arch}</div>
+        <p style="font-size:11px;color:var(--mu);font-family:'Fira Code',monospace;margin:10px 0 6px;letter-spacing:.06em">SETUP STEPS</p>
+        <ol class="uc-steps">${uc.steps.map(s=>`<li>${s.s}</li>`).join('')}</ol>
+        <div class="uc-highlight">💡 <strong>Key insight:</strong> ${uc.tip}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleUC(idx){const c=document.getElementById('uc-'+idx);c.classList.toggle('open');}
+renderUseCases();
+
+// ── THEME TOGGLE ─────────────────────────────────────────────────────────────
+let isDark=true;
+function toggleTheme(){
+  isDark=!isDark;
+  document.body.classList.toggle('light',!isDark);
+  const icon=document.getElementById('theme-icon');
+  const lbl=document.getElementById('theme-label');
+  if(!isDark){
+    // Moon icon for "switch to dark"
+    icon.innerHTML='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    lbl.textContent='Dark';
+  } else {
+    // Sun icon for "switch to light"
+    icon.innerHTML='<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+    lbl.textContent='Light';
+  }
+}
+
+// ── PDF GENERATION ────────────────────────────────────────────────────────────
+function downloadPDF(){
+  const btn = event.currentTarget;
+  const origHTML = btn.innerHTML;
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Generating...';
+  btn.disabled = true;
+
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+  script.onload = () => {
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      const PW = 297, PH = 210;
+      const MX = 16, MY = 14;
+
+      // ─── Color palette ────────────────────────────────────────────
+      const C = {
+        bg:      [6,   8,  16],
+        bg2:     [11,  15,  30],
+        bg3:     [16,  21,  40],
+        bg4:     [20,  28,  52],
+        cyan:    [0,  200, 230],
+        cyanDim: [0,  140, 160],
+        green:   [0,  200, 140],
+        white:   [232, 237, 245],
+        grey:    [100, 115, 140],
+        greyDim: [50,  65,  90],
+        border:  [25,  38,  65],
+      };
+
+      const setFill = (c) => doc.setFillColor(c[0], c[1], c[2]);
+      const setTxt  = (c) => doc.setTextColor(c[0], c[1], c[2]);
+      const setDraw = (c) => doc.setDrawColor(c[0], c[1], c[2]);
+
+      const FOOTER_TEXT = 'KubeLearn by Deven Kalathiya';
+      const FOOTER_LINKS = 'Portfolio: deven1003.github.io/portfolio_dk_devops_ai   |   LinkedIn: linkedin.com/in/deven-kalathiya   |   GitHub: github.com/deven1003';
+      const TOTAL_PAGES = CS_DATA.length + 1; // +1 for index
+
+      // ─── Helper: draw page chrome ──────────────────────────────────
+      function drawChrome(pageNum) {
+        // Full background
+        setFill(C.bg);
+        doc.rect(0, 0, PW, PH, 'F');
+
+        // Top header band
+        setFill(C.bg2);
+        doc.rect(0, 0, PW, 18, 'F');
+
+        // Cyan top border line
+        setFill(C.cyan);
+        doc.rect(0, 0, PW, 1.2, 'F');
+
+        // Header: left — brand name
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        setTxt(C.cyan);
+        doc.text('KubeLearn', MX, 11);
+
+        doc.setFont('helvetica', 'normal');
+        setTxt(C.grey);
+        doc.text('kubectl Cheatsheet', MX + 26, 11);
+
+        // Header: right — page number
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        setTxt(C.grey);
+        doc.text(`Page ${pageNum} of ${TOTAL_PAGES}`, PW - MX, 11, { align: 'right' });
+
+        // Header bottom border
+        setDraw(C.border);
+        doc.setLineWidth(0.3);
+        doc.line(0, 18, PW, 18);
+
+        // Footer band
+        setFill([4, 6, 12]);
+        doc.rect(0, PH - 12, PW, 12, 'F');
+        setDraw(C.border);
+        doc.setLineWidth(0.3);
+        doc.line(0, PH - 12, PW, PH - 12);
+
+        // Footer cyan left bar
+        setFill(C.cyan);
+        doc.rect(0, PH - 12, 2.5, 12, 'F');
+
+        // Footer text left
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        setTxt(C.cyan);
+        doc.text(FOOTER_TEXT, MX, PH - 6.5);
+
+        // Footer text center (links)
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(6.5);
+        setTxt(C.grey);
+        doc.text(FOOTER_LINKS, PW / 2, PH - 6.5, { align: 'center' });
+
+        // Footer page right
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        setTxt(C.grey);
+        doc.text(`${pageNum} / ${TOTAL_PAGES}`, PW - MX, PH - 6.5, { align: 'right' });
+      }
+
+      // ─── PAGE 1: Index ─────────────────────────────────────────────
+      drawChrome(1);
+
+      // Big title
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(28);
+      setTxt(C.white);
+      doc.text('kubectl', MX, 42);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(28);
+      setTxt(C.cyan);
+      doc.text('Cheatsheet', MX + 49, 42);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      setTxt(C.grey);
+      doc.text('Complete kubectl command reference for Kubernetes — ' + CS_DATA.reduce((a,g)=>a+g.cmds.length,0) + ' commands across ' + CS_DATA.length + ' categories', MX, 52);
+
+      // Divider
+      setFill(C.cyan);
+      doc.rect(MX, 57, 40, 0.8, 'F');
+
+      // Table of Contents label
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      setTxt(C.grey);
+      doc.text('TABLE OF CONTENTS', MX, 67);
+
+      // Index entries
+      const colColors = [C.cyan, [160,120,255], C.green, [255,180,50], C.cyan, [220,80,100]];
+      CS_DATA.forEach((group, i) => {
+        const col = i < 3 ? 0 : 1;
+        const row = i % 3;
+        const x = MX + col * 130;
+        const y = 76 + row * 26;
+
+        // Card background
+        setFill(C.bg2);
+        doc.roundedRect(x, y - 6, 122, 22, 2, 2, 'F');
+        setDraw(C.border);
+        doc.setLineWidth(0.3);
+        doc.roundedRect(x, y - 6, 122, 22, 2, 2, 'S');
+
+        // Color accent left
+        const cc = colColors[i] || C.cyan;
+        doc.setFillColor(cc[0], cc[1], cc[2]);
+        doc.roundedRect(x, y - 6, 3, 22, 1, 1, 'F');
+
+        // Page number circle
+        doc.setFillColor(cc[0], cc[1], cc[2]);
+        doc.circle(x + 112, y + 4, 6, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8);
+        setTxt(C.bg);
+        doc.text(`${i + 2}`, x + 112, y + 5, { align: 'center' });
+
+        // Group title
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(cc[0], cc[1], cc[2]);
+        doc.text(group.title, x + 8, y + 1);
+
+        // Command count
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        setTxt(C.grey);
+        doc.text(`${group.cmds.length} commands`, x + 8, y + 9);
+      });
+
+      // Bottom note
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      setTxt(C.greyDim);
+      doc.text('Open source · Free to share · KubeLearn by Deven Kalathiya', PW / 2, PH - 18, { align: 'center' });
+
+      // ─── PAGES 2–N: Command pages ──────────────────────────────────
+      CS_DATA.forEach((group, pi) => {
+        doc.addPage();
+        drawChrome(pi + 2);
+
+        const cc = colColors[pi] || C.cyan;
+
+        // Category accent bar
+        doc.setFillColor(cc[0], cc[1], cc[2]);
+        doc.rect(0, 18, 4, 40, 'F');
+
+        // Category title
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        setTxt(C.white);
+        doc.text(group.title, MX + 4, 31);
+
+        // Command count badge
+        setFill(C.bg3);
+        doc.roundedRect(MX + 4, 34, 32, 7, 2, 2, 'F');
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor(cc[0], cc[1], cc[2]);
+        doc.text(`${group.cmds.length} commands`, MX + 8, 38.5);
+
+        // Table header
+        const TY = 52;
+        setFill(C.bg3);
+        doc.rect(MX, TY - 5, PW - MX * 2, 8, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.5);
+        setTxt(C.grey);
+        doc.text('COMMAND', MX + 3, TY);
+        doc.text('DESCRIPTION', MX + (PW - MX * 2) * 0.55 + 3, TY);
+
+        setDraw(C.border);
+        doc.setLineWidth(0.4);
+        doc.line(MX, TY + 3, PW - MX, TY + 3);
+
+        // Rows
+        const ROW_H = 7;
+        const maxRows = Math.floor((PH - TY - 20) / ROW_H);
+        group.cmds.slice(0, maxRows).forEach((cmd, ri) => {
+          const y = TY + 8 + ri * ROW_H;
+          if (ri % 2 === 1) {
+            setFill(C.bg2);
+            doc.rect(MX, y - 4.5, PW - MX * 2, ROW_H, 'F');
+          }
+          // Command
+          doc.setFont('courier', 'normal');
+          doc.setFontSize(8.5);
+          setTxt(C.cyan);
+          const maxCmd = 52;
+          doc.text(cmd.c.length > maxCmd ? cmd.c.slice(0, maxCmd - 1) + '…' : cmd.c, MX + 3, y);
+          // Description
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8.5);
+          setTxt(C.white);
+          const descX = MX + (PW - MX * 2) * 0.55 + 3;
+          const maxDesc = 46;
+          doc.text(cmd.d.length > maxDesc ? cmd.d.slice(0, maxDesc - 1) + '…' : cmd.d, descX, y);
+          // Row separator
+          setDraw(C.greyDim);
+          doc.setLineWidth(0.15);
+          doc.line(MX, y + 2.5, PW - MX, y + 2.5);
+        });
+      });
+
+      doc.save('KubeLearn-kubectl-cheatsheet.pdf');
+    } catch(e) {
+      console.error(e);
+      alert('PDF error: ' + e.message);
+    }
+    btn.innerHTML = origHTML;
+    btn.disabled = false;
+  };
+  script.onerror = () => {
+    alert('Could not load PDF library. Check your internet connection.');
+    btn.innerHTML = origHTML;
+    btn.disabled = false;
+  };
+  document.head.appendChild(script);
+}
+const CS_DATA=[
+  {cat:'get',title:'Get & View Resources',color:'var(--cy)',tag:'Read-only',tagBg:'rgba(0,229,255,.1)',tagColor:'var(--cy)',cmds:[
+    {c:'kubectl get pods',d:'list all pods'},
+    {c:'kubectl get pods -o wide',d:'with node & IP info'},
+    {c:'kubectl get pods -A',d:'all namespaces'},
+    {c:'kubectl get pods -w',d:'watch live updates'},
+    {c:'kubectl get all',d:'pods, svcs, deploys'},
+    {c:'kubectl get nodes',d:'list cluster nodes'},
+    {c:'kubectl get svc',d:'list services'},
+    {c:'kubectl get deployments',d:'list deployments'},
+    {c:'kubectl get events --sort-by=.lastTimestamp',d:'cluster events sorted'},
+    {c:'kubectl get pvc',d:'persistent volume claims'},
+    {c:'kubectl get configmaps',d:'list configmaps'},
+    {c:'kubectl get secrets',d:'list secrets'},
+    {c:'kubectl describe pod <name>',d:'full pod details + events'},
+    {c:'kubectl describe node <name>',d:'node details'},
+    {c:'kubectl describe svc <name>',d:'service details'},
+    {c:'kubectl api-resources',d:'all resource types'},
+    {c:'kubectl cluster-info',d:'cluster endpoint info'},
+  ]},
+  {cat:'create',title:'Create & Apply',color:'var(--gn)',tag:'Write',tagBg:'rgba(0,255,163,.1)',tagColor:'var(--gn)',cmds:[
+    {c:'kubectl apply -f file.yaml',d:'create or update resource'},
+    {c:'kubectl apply -f ./dir/',d:'apply entire directory'},
+    {c:'kubectl apply -f file.yaml --dry-run=client',d:'preview changes'},
+    {c:'kubectl create deployment my-app --image=nginx',d:'quick deployment'},
+    {c:'kubectl create deployment my-app --image=nginx --replicas=3',d:'with replicas'},
+    {c:'kubectl run my-pod --image=nginx',d:'run a quick pod'},
+    {c:'kubectl expose deployment my-app --port=80 --type=NodePort',d:'expose as service'},
+    {c:'kubectl expose deployment my-app --port=80 --type=LoadBalancer',d:'expose with LB'},
+    {c:'kubectl create namespace my-ns',d:'create namespace'},
+    {c:'kubectl create secret generic my-sec --from-literal=KEY=val',d:'create secret'},
+    {c:'kubectl create configmap my-cfg --from-literal=KEY=val',d:'create configmap'},
+    {c:'kubectl create serviceaccount my-sa',d:'create service account'},
+  ]},
+  {cat:'debug',title:'Debug & Inspect',color:'var(--am)',tag:'Debug',tagBg:'rgba(255,184,0,.1)',tagColor:'var(--am)',cmds:[
+    {c:'kubectl logs <pod>',d:'view pod logs'},
+    {c:'kubectl logs <pod> -f',d:'stream live logs'},
+    {c:'kubectl logs <pod> --previous',d:'last crashed container'},
+    {c:'kubectl logs <pod> -c <container>',d:'specific container'},
+    {c:'kubectl logs <pod> --tail=50',d:'last 50 lines'},
+    {c:'kubectl exec -it <pod> -- bash',d:'shell into pod'},
+    {c:'kubectl exec -it <pod> -- sh',d:'shell (minimal image)'},
+    {c:'kubectl exec <pod> -- env',d:'print env vars'},
+    {c:'kubectl port-forward pod/<name> 8080:80',d:'forward pod port'},
+    {c:'kubectl port-forward svc/<name> 8080:80',d:'forward service port'},
+    {c:'kubectl top pods',d:'CPU/memory usage'},
+    {c:'kubectl top nodes',d:'node resource usage'},
+    {c:'kubectl get endpoints <svc>',d:'check pod IPs behind svc'},
+    {c:'kubectl run debug --image=busybox -it --rm -- sh',d:'throw-away debug pod'},
+  ]},
+  {cat:'scale',title:'Scale & Update',color:'#a78bfa',tag:'Modify',tagBg:'rgba(139,92,246,.1)',tagColor:'#a78bfa',cmds:[
+    {c:'kubectl scale deployment my-app --replicas=5',d:'scale to 5 pods'},
+    {c:'kubectl scale deployment my-app --replicas=0',d:'stop app (keep deploy)'},
+    {c:'kubectl set image deployment/my-app app=nginx:1.25',d:'update image'},
+    {c:'kubectl rollout status deployment/my-app',d:'watch rollout progress'},
+    {c:'kubectl rollout undo deployment/my-app',d:'rollback to previous'},
+    {c:'kubectl rollout history deployment/my-app',d:'view revision history'},
+    {c:'kubectl rollout undo deployment/my-app --to-revision=2',d:'rollback to revision 2'},
+    {c:'kubectl edit deployment my-app',d:'live-edit in editor'},
+    {c:'kubectl patch deployment my-app -p \'{"spec":{"replicas":3}}\'',d:'patch field directly'},
+    {c:'kubectl autoscale deployment my-app --min=2 --max=10 --cpu-percent=70',d:'create HPA'},
+  ]},
+  {cat:'config',title:'Config & Context',color:'var(--cy)',tag:'Config',tagBg:'rgba(0,229,255,.08)',tagColor:'var(--cy)',cmds:[
+    {c:'kubectl config get-contexts',d:'list all contexts'},
+    {c:'kubectl config current-context',d:'show active context'},
+    {c:'kubectl config use-context <name>',d:'switch cluster/context'},
+    {c:'kubectl config set-context --current --namespace=prod',d:'set default namespace'},
+    {c:'kubectl get pods -n kube-system',d:'query specific namespace'},
+    {c:'kubectl get pods -n <namespace>',d:'any namespace'},
+    {c:'kubectl config view',d:'view kubeconfig'},
+    {c:'kubectl explain pod.spec',d:'field docs for resource'},
+    {c:'kubectl explain deployment.spec.template',d:'nested field docs'},
+    {c:'kubectl get pod <name> -o yaml',d:'get resource as YAML'},
+    {c:'kubectl get pod <name> -o json',d:'get resource as JSON'},
+    {c:'kubectl label pod <name> env=prod',d:'add a label'},
+    {c:'kubectl annotate pod <name> note="my note"',d:'add annotation'},
+  ]},
+  {cat:'delete',title:'Delete & Clean Up',color:'var(--rd)',tag:'Delete',tagBg:'rgba(255,77,106,.1)',tagColor:'var(--rd)',cmds:[
+    {c:'kubectl delete pod <name>',d:'delete a pod'},
+    {c:'kubectl delete -f file.yaml',d:'delete resources in file'},
+    {c:'kubectl delete deployment my-app',d:'delete deployment'},
+    {c:'kubectl delete svc my-svc',d:'delete service'},
+    {c:'kubectl delete namespace my-ns',d:'delete entire namespace'},
+    {c:'kubectl delete pod <name> --grace-period=0 --force',d:'force delete stuck pod'},
+    {c:'kubectl delete pods --all -n <namespace>',d:'delete all pods in ns'},
+  ]},
+];
+
+let csCurrentCat='all';
+function renderCheatsheet(){
+  const grid=document.getElementById('cs-grid');
+  const filtered=csCurrentCat==='all'?CS_DATA:CS_DATA.filter(g=>g.cat===csCurrentCat);
+  grid.innerHTML=filtered.map(group=>`
+    <div class="cs-card">
+      <div class="cs-card-hd">
+        <span class="cs-card-title">${group.title}</span>
+        <span class="cs-card-tag" style="background:${group.tagBg};color:${group.tagColor};border:1px solid ${group.tagColor.replace(')',', .25)').replace('var(','rgba(').replace('--cy','0,229,255').replace('--gn','0,255,163').replace('--am','255,184,0').replace('--rd','255,77,106')}">${group.tag}</span>
+      </div>
+      <div class="cs-rows">
+        ${group.cmds.map(cmd=>`
+          <div class="cs-row" onclick="cpCS(this,'${cmd.c.replace(/'/g,"\\'")}')" title="Click to copy">
+            <span class="cs-cmd">${cmd.c}</span>
+            <span class="cs-desc">${cmd.d}</span>
+            <button class="cs-copy">⎘</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+function fCS(cat,btn){
+  document.querySelectorAll('.cs-cat').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  csCurrentCat=cat;
+  renderCheatsheet();
+}
+function cpCS(row,cmd){
+  navigator.clipboard.writeText(cmd).catch(()=>{});
+  const btn=row.querySelector('.cs-copy');
+  const orig=btn.textContent;
+  btn.textContent='✓';btn.style.color='var(--gn)';
+  row.style.background='rgba(0,255,163,.06)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.color='';row.style.background='';},1200);
+}
+renderCheatsheet();
+function gS(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.querySelectorAll('.nl').forEach((b,i)=>b.classList.toggle('active',SECS[i]===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+renderTopics();renderQA();renderLabs();
+</script>
+</body>
+</html>
